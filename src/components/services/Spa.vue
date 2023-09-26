@@ -1,38 +1,225 @@
 <template>
   <div class="spa-home">
-    <h1>Spa Home</h1>
-    <h3 class="greetings">{{ msg }}</h3>
+
+    <div>
+      <CustomHeader title="My Concierge" subtitle="Spa" />
+    </div>
+
+    <div class="navbar-container">
+      <nav>
+        <ul>
+            <li><a href="#">Home</a></li>
+            <li class="sep">|</li>
+            <li><a href="#">Calendar</a></li>
+            <li class="sep">|</li>
+            <li><a href="#">Services</a></li>
+        </ul>
+      </nav>
+    </div>
+
+    
+    <div class="main-container">
+
+    <div class="col1">
+
+    <div class="form-container">
+      <div class="form-box">
+        <div class="title">
+         <h3>Make a Reservation</h3> 
+        </div>
+        <div class="row">
+          <input type="text">
+          <input type="text">
+        </div>
+
+        <div class="row">
+          <input type="text">
+          <input type="text">
+        </div>
+
+        <div class="row">
+            <button>Submit</button>
+        </div>  
+      </div>
+    </div>
+
+    
+    <div class="contact-container">
+      <div class="contact">
+        <h3>Contact the Spa: 555-222-5656</h3>
+      </div>
+    </div>
+
+    </div>
+    
+    <div class="service-container">
+        <div class="services">
+          <div class="title">
+            <h3>
+              Spa Services
+            </h3>
+          </div>
+
+          <div>
+            <li v-for="(item, index) in items">
+            {{ item.message }}
+          </li>
+          </div>
+
+          </div>
+    </div>
+    </div>
   </div>
 </template>
 
 <script>
+import CustomHeader from '../shared/CustomHeader.vue';
+import { ref } from 'vue'
+
+
 export default {
-  data() {
-      return {
-          msg: 'Work in Progress ...'
-      }
-  }
+  components: {
+    CustomHeader
+  },
+    data() {
+        return {
+          items: [
+          { message: 'Hot Stone Massage' },
+          { message: 'Sport Massage' },
+          { message: 'Swedish Massage' },
+          { message: 'Reflexology' },
+          { message: 'Facial' },
+          { message: 'Manicure' },
+          { message: 'Pedicure' }
+      ]        
+      };
+    },
 }
 </script>
   
 <style lang="scss">
   .spa-home {
+
+    .navbar-container li {
+      display: inline;
+    }
+
+    .sep {
+      color: black;
+    }
+
+    a {
+      text-decoration: none;
+      color: black; /* Link color */
+    }
+
+    /* Center the navigation bar horizontally */
+    nav {
+      background-color: white;
+      margin: 0;
+      text-align: center;
+    }
+
+    .main-container {
+      background-size: cover;
+      background-image: url("/src/assets/massage-therapy.jpg");
+      display: flex;
+      justify-content: space-around;
+      flex-wrap: wrap;
+      padding: 2em;
+    }
+
+    .form-container {
+      background-color: white;
+      width: 500px;
+      padding: 0.5em;
+      border: solid 1px black;
+    }
+
+    .service-container {
+      background-color: white;
+      width: 400px;
+      border-radius: 10px;
+    }
+
+    .services h3 {
+      font-size: x-large;
+      text-align: center;
+      color: black;
+      padding: 10px;
+    }
+
+    .services h3:after {
+      content: ' ';
+      display: block;
+      border: 1px solid black;
+      width: 50%;
+      margin-inline: auto;
+      margin-block: 6px;
+    }
+
+    .contact-container {
+      background-color: white;
+      width: 500px;
+      padding: 1em;
+      border: solid 1px black;
+      margin-top: 1em;
+    }
+
+    .row {
+      display: flex;
+      align-items: center;
+      justify-content: space-around;
+      flex-wrap: wrap;
+      margin: 4em;
+    }
+
+    .row input {
+      width: 150px;
+      height: 40px;
+      border-radius: 8px;
+      border: 1px solid #cccccc;
+      border-color: black;
+    }
+
+    .form-container .title h3 {
+      text-align: center;
+      border-bottom: solid 1px;
+      color: black;
+      padding: 10px;
+    }
+
+    .services li {
+      color: black;
+      list-style-type: none;
+      text-align: center;
+      line-height: 3em;
+      font-size: large;
+    }
+
+    .contact h3 {
+      text-align: center;
+      color: black;
+    }
+
     h1 {
       font-weight: 500;
       font-size: 2.6rem;
       position: relative;
       top: -10px;
     }
-    
+
     h3 {
       font-size: 1.2rem;
       text-align: center;
     }
-    
-    @media (min-width: 1024px) {
-      h1,
-      h3 {
-        text-align: left;
+
+    @media (max-width: 767px) {
+      .form-container,
+      .service-container,
+      .contact-container {
+        width: 300px;
+        margin: 1em;
       }
     }
   }
