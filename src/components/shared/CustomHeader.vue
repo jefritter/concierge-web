@@ -48,6 +48,7 @@ export default {
     margin: 20px;
     height: 100px;
     width: 100px;    
+    border-radius: 6px;
   }
   h1 {
     color: black;
