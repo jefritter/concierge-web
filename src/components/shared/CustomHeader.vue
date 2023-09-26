@@ -2,7 +2,11 @@
   <div class="header">
     <img class=logo src="../../assets/butler.png">
     <h1>
-      {{ title }}
+      {{title}}
+    </h1>
+
+    <h1>
+      {{subtitle}}
     </h1>
   </div>
 </template>
@@ -11,6 +15,10 @@
 export default {
   props: {
     title: {
+      type: String,
+      required: true
+    },
+    subtitle: {
       type: String,
       required: true
     },
