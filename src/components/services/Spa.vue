@@ -96,6 +96,8 @@ export default {
 .spa-home {
     background-size: cover;
     background-image: url("/src/assets/massage-therapy.jpg");
+    min-height: 100vh;
+
   .navbar-container {
     li {
       display: inline;
