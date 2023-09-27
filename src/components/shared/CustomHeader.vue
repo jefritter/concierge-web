@@ -49,6 +49,10 @@ export default {
     height: 100px;
     width: 100px;    
     border-radius: 6px;
+    
+    h1{
+      color: white;
+    }
   }
   h1 {
     color: black;
