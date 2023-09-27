@@ -49,20 +49,20 @@
           </div>
         </div>
 
+      </div>
 
-        <div class="service-container">
-          <div class="services">
-            <div class="title">
-              <h3>
-                Spa Services
-              </h3>
-            </div>
+      <div class="service-container">
+        <div class="services">
+          <div class="title">
+            <h3>
+              Spa Services
+            </h3>
+          </div>
 
-            <div>
-              <li v-for="(item, index) in items">
-                {{ item.message }}
-              </li>
-            </div>
+          <div>
+            <li v-for="(item, index) in items">
+              {{ item.message }}
+            </li>
           </div>
         </div>
       </div>
