@@ -94,7 +94,8 @@ export default {
   
 <style lang="scss">
 .spa-home {
-
+    background-size: cover;
+    background-image: url("/src/assets/massage-therapy.jpg");
   .navbar-container {
     li {
       display: inline;
@@ -119,8 +120,6 @@ export default {
   }
 
   .main-container {
-    background-size: cover;
-    background-image: url("/src/assets/massage-therapy.jpg");
     display: flex;
     justify-content: space-around;
     flex-wrap: wrap;
