@@ -42,7 +42,6 @@
           </div>
         </div>
 
-
         <div class="contact-container">
           <div class="contact">
             <h3>Contact the Spa: 555-222-5656</h3>
@@ -96,25 +95,27 @@ export default {
 <style lang="scss">
 .spa-home {
 
-  .navbar-container li {
-    display: inline;
-  }
+  .navbar-container {
+    li {
+      display: inline;
+      list-style: none;
+    }
 
-  .sep {
-    color: black;
-  }
+    nav {
+      background-color: white;
+      margin: 0;
+      text-align: center;
 
-  a {
-    text-decoration: none;
-    color: black;
-    /* Link color */
-  }
+      .sep {
+        color: black;
+      }
 
-  /* Center the navigation bar horizontally */
-  nav {
-    background-color: white;
-    margin: 0;
-    text-align: center;
+      a {
+        text-decoration: none;
+        color: black;
+        /* Link color */
+      }
+    }
   }
 
   .main-container {
@@ -124,79 +125,79 @@ export default {
     justify-content: space-around;
     flex-wrap: wrap;
     padding: 2em;
-  }
 
-  .form-container {
-    background-color: white;
-    width: 500px;
-    padding: 0.5em;
-    border: solid 1px black;
-  }
+    .form-container {
+      background-color: white;
+      width: 500px;
+      padding: 0.5em;
+      border: solid 1px black;
 
-  .service-container {
-    background-color: white;
-    width: 400px;
-    border-radius: 10px;
-  }
+      .row {
+        display: flex;
+        align-items: center;
+        justify-content: space-around;
+        flex-wrap: wrap;
+        margin: 4em;
+      }
 
-  .services h3 {
-    font-size: x-large;
-    text-align: center;
-    color: black;
-    padding: 10px;
-  }
+      .row input {
+        width: 150px;
+        height: 40px;
+        border-radius: 8px;
+        border: 1px solid #cccccc;
+        border-color: black;
+      }
 
-  .services h3:after {
-    content: ' ';
-    display: block;
-    border: 1px solid black;
-    width: 50%;
-    margin-inline: auto;
-    margin-block: 6px;
-  }
+      h3 {
+        text-align: center;
+        border-bottom: solid 1px;
+        color: black;
+        padding: 10px;
+      }
+    }
 
-  .contact-container {
-    background-color: white;
-    width: 500px;
-    padding: 1em;
-    border: solid 1px black;
-    margin-top: 1em;
-  }
+    .service-container {
+      background-color: white;
+      width: 400px;
+      border-radius: 10px;
 
-  .row {
-    display: flex;
-    align-items: center;
-    justify-content: space-around;
-    flex-wrap: wrap;
-    margin: 4em;
-  }
+      .services h3 {
+        font-size: x-large;
+        text-align: center;
+        color: black;
+        padding: 10px;
+      }
 
-  .row input {
-    width: 150px;
-    height: 40px;
-    border-radius: 8px;
-    border: 1px solid #cccccc;
-    border-color: black;
-  }
+      .services h3:after {
+        content: ' ';
+        display: block;
+        border: 1px solid black;
+        width: 50%;
+        margin-inline: auto;
+        margin-block: 6px;
+      }
 
-  .form-container .title h3 {
-    text-align: center;
-    border-bottom: solid 1px;
-    color: black;
-    padding: 10px;
-  }
+      .services li {
+        color: black;
+        list-style-type: none;
+        text-align: center;
+        line-height: 3em;
+        font-size: large;
+      }
+    }
 
-  .services li {
-    color: black;
-    list-style-type: none;
-    text-align: center;
-    line-height: 3em;
-    font-size: large;
-  }
+    .contact-container {
+      background-color: white;
+      width: 500px;
+      padding: 1em;
+      border: solid 1px black;
+      margin-top: 1em;
 
-  .contact h3 {
-    text-align: center;
-    color: black;
+      .contact h3 {
+        text-align: center;
+        color: black;
+      }
+    }
   }
 
   h1 {
