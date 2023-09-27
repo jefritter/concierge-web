@@ -74,8 +74,6 @@
 
 <script>
 import CustomHeader from '../shared/CustomHeader.vue';
-import { ref } from 'vue'
-
 
 export default {
   components: {
