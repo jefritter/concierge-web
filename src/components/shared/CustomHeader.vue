@@ -4,6 +4,10 @@
     <h1>
       {{ title }}
     </h1>
+    
+    <h1>
+      {{subtitle }}
+    </h1>
   </div>
 </template>
   
@@ -11,6 +15,10 @@
 export default {
   props: {
     title: {
+      type: String,
+      required: true
+    },
+    subtitle:{
       type: String,
       required: true
     },
@@ -39,7 +47,12 @@ export default {
     display: block;
     margin: 20px;
     height: 100px;
-    width: 100px;
+    width: 100px;    
+    border-radius: 6px;
+    
+    h1{
+      color: white;
+    }
   }
   h1 {
     color: black;
@@ -47,6 +60,7 @@ export default {
     font-size: 2rem;
     flex-grow: 2;
   }
+  
 }
 </style>
   
