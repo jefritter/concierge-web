@@ -6,7 +6,10 @@
     },
     data() {
        return {
-          msg: 'Work in Progress ...'
+          items: [
+            {message: 'La Scala Opera Trip'},
+            {message: 'Night Club Hop'}
+          ]
        }
    }
   }
@@ -14,7 +17,7 @@
 
 <template>
   <div class="events-home">
-    <CustomHeader title="My Concierge" subtitle="Events"/>
+    <CustomHeader title="My Concierge" subtitle="Special Events"/>
 
     <nav>
       <router-link to="/">Home</router-link>
@@ -33,7 +36,10 @@
       </div>
       <div class="right-column">
         <div class="events-box">
-          <span>Upcoming Events</span>
+          <h3>Upcoming Events</h3>
+          <li v-for = "(item, index) in items">
+            {{ item.message }}
+          </li>
         </div>
       </div>
     </main>
