@@ -1,20 +1,3 @@
-<script>
-  import CustomHeader from '@/components/shared/CustomHeader.vue';
-  export default {
-    components: {
-      CustomHeader,
-    },
-    data() {
-       return {
-          items: [
-            {message: 'La Scala Opera Trip'},
-            {message: 'Night Club Hop'}
-          ]
-       }
-   }
-  }
-</script>
-
 <template>
   <div class="events-home">
     <CustomHeader title="My Concierge" subtitle="Special Events"/>
@@ -36,16 +19,49 @@
       </div>
       <div class="right-column">
         <div class="events-box">
-          <h3>Upcoming Events</h3>
-          <li v-for = "(item, index) in items">
-            {{ item.message }}
-          </li>
+          <h2>Upcoming Events</h2>
+          <div v-for="(event, index) in events" :key="index" class="event-item">
+            <h4 class="event-title">{{ event.title }}</h4>
+            <p><strong>Reservations:</strong> <span>{{ event.reservations }}</span></p>
+            <p><strong>Openings:</strong> <span>{{ event.openings }}</span></p>
+            <p><strong>Transportation:</strong> <span>{{ event.transportation }}</span></p>
+            <p><strong>Host:</strong> <span>{{ event.host }}</span></p>
+          </div>
         </div>
       </div>
     </main>
   </div>
 </template>
-  
+
+<script>
+  import CustomHeader from '@/components/shared/CustomHeader.vue';
+  export default {
+    components: {
+      CustomHeader,
+    },
+    data() {
+       return {
+          events: [
+            {
+              title: 'La Scala Opera Trip',
+              reservations: 26,
+              openings: 14,
+              transportation: 'ABC Bus',
+              host: 'Andy Cohen'
+            },
+            {
+              title: 'Night Club Hop',
+              reservations: 10,
+              openings: 6,
+              transportation: 'XYZ Limo',
+              host: 'Joe Jackson, Patty Smith'
+            }
+          ]
+       }
+   }
+  }
+</script>
+
 <style lang="scss">
   @import '@/assets/base.css';
   @import '@/assets/main.css';
@@ -77,6 +93,33 @@
           background-color:white;
           padding: 10px;
           border-radius: 10px;
+
+          h2 {
+            font-size: 2rem;
+            font-weight: bold;
+            text-align: center;
+          }
+
+          h2::after {
+            content: "";
+            display: block;
+            width: 70%;
+            height: 2px;
+            background-color: #333;
+            margin: 10px auto;
+            content: "";
+          }
+
+          .event-item {
+            margin-bottom: 20px;
+            padding: 10px;
+            margin-left: 100px;
+          }
+
+          .event-title {
+            font-weight: bold;
+            font-size: 1.2rem;
+          }
         }
       }
 
