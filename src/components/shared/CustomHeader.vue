@@ -2,7 +2,11 @@
   <div class="header">
     <img class=logo src="../../assets/butler.png">
     <h1>
-      {{ title }}
+      {{title}}
+    </h1>
+
+    <h1>
+      {{subtitle}}
     </h1>
     
     <h1>
@@ -18,7 +22,7 @@ export default {
       type: String,
       required: true
     },
-    subtitle:{
+    subtitle: {
       type: String,
       required: true
     },
