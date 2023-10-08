@@ -1,13 +1,11 @@
 <template>
   <div class="events-home">
     <CustomHeader title="My Concierge" subtitle="Special Events"/>
-
     <nav>
       <router-link to="/">Home</router-link>
       <router-link to="/calendar">Calendar</router-link>
       <router-link to="/services">Services</router-link>
     </nav>
-
     <main>
       <div class="left-column">
         <div class="reservation-box">
@@ -69,12 +67,10 @@
     display: flex;
     flex-direction: column;
     min-height: 100vh; 
-
     nav {
       padding: 10px;
       text-align: center;
     }
-
     main {
       background-image: url('@/assets/special-event-table.webp');
       background-size: cover; 
@@ -84,22 +80,18 @@
       display: flex;
       justify-content: space-between;
       padding: 20px;
-
       .right-column {
         flex-basis: 50%;
         margin: 150px;
-
         .events-box {
           background-color:white;
           padding: 10px;
           border-radius: 10px;
-
           h2 {
             font-size: 2rem;
             font-weight: bold;
             text-align: center;
           }
-
           h2::after {
             content: "";
             display: block;
@@ -109,26 +101,22 @@
             margin: 10px auto;
             content: "";
           }
-
           .event-item {
             margin-bottom: 20px;
             padding: 10px;
             margin-left: 100px;
           }
-
           .event-title {
             font-weight: bold;
             font-size: 1.2rem;
           }
         }
       }
-
       .left-column {
         flex-basis: 50%;
         display: flex;
         flex-direction: column;
         margin: 150px;
-
         .reservation-box{
           background-color:white;
           flex-basis: 75%;
@@ -136,7 +124,6 @@
           margin-bottom: 50px;
           border: 1px solid black;
         }
-
         .contact-box{
           background-color:white;
           flex-basis: 25%;
