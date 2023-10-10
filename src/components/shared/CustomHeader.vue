@@ -8,10 +8,6 @@
     <h1>
       {{subtitle}}
     </h1>
-    
-    <h1>
-      {{subtitle }}
-    </h1>
   </div>
 </template>
   

@@ -2,9 +2,6 @@
   <div>
     <header>
       <img alt="Vue logo" class="logo" src="@/assets/logo.svg" width="125" height="125" />
-      <div class="wrapper">
-        <HelloWorld msg="You did it!" />
-      </div>
     </header>
     <h1>{{ header }}</h1>
     <table v-if="hasUserData">
@@ -21,22 +18,17 @@
         <td>{{ user.email }}</td>
       </tr>
     </table>
-    <nav>
-        <RouterLink to="/">Home</RouterLink>
-        <RouterLink to="/dining">Dining</RouterLink>
-        <RouterLink to="/events">Events</RouterLink>
-        <RouterLink to="/spa">Spa</RouterLink>
-      </nav>
+    <NavBar />
   </div>
 </template>
 
 <script>
   import { RouterLink } from 'vue-router'
-  import HelloWorld from '../views/HelloWorld.vue'
+  import NavBar from '@/components/shared/NavBar.vue';
   export default {
     name: 'Home',
     components: [
-      HelloWorld,
+      NavBar,
       RouterLink
     ],
     data() {

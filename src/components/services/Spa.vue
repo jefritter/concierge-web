@@ -5,17 +5,7 @@
       <CustomHeader title="My Concierge" subtitle="Spa" />
     </div>
 
-    <div class="navbar-container">
-      <nav>
-        <ul>
-          <li><a href="#">Home</a></li>
-          <li class="sep">|</li>
-          <li><a href="#">Calendar</a></li>
-          <li class="sep">|</li>
-          <li><a href="#">Services</a></li>
-        </ul>
-      </nav>
-    </div>
+    <NavBar />
 
     <div class="main-container">
       <div class="col1">
@@ -71,10 +61,12 @@
 
 <script>
 import CustomHeader from '../shared/CustomHeader.vue';
+import NavBar from '@/components/shared/NavBar.vue';
 
 export default {
   components: {
-    CustomHeader
+    CustomHeader,
+    NavBar
   },
   data() {
     return {
@@ -97,29 +89,6 @@ export default {
     background-size: cover;
     background-image: url("/src/assets/massage-therapy.jpg");
     min-height: 100vh;
-
-  .navbar-container {
-    li {
-      display: inline;
-      list-style: none;
-    }
-
-    nav {
-      background-color: white;
-      margin: 0;
-      text-align: center;
-
-      .sep {
-        color: black;
-      }
-
-      a {
-        text-decoration: none;
-        color: black;
-        /* Link color */
-      }
-    }
-  }
 
   .main-container {
     display: flex;
