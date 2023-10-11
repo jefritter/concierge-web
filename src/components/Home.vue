@@ -1,63 +1,96 @@
 <template>
-  <div>
-    <header>
-      <img alt="Vue logo" class="logo" src="@/assets/logo.svg" width="125" height="125" />
-      <div class="wrapper">
-        <HelloWorld msg="You did it!" />
-      </div>
-    </header>
-    <h1>{{ header }}</h1>
-    <table v-if="hasUserData">
-      <tr>
-        <th>Id</th>
-        <th>First</th>
-        <th>Last</th>
-        <th>Email</th>
-      </tr>
-      <tr v-for="(user, index) in users" :key="index">
-        <td>{{ user.id }}</td>
-        <td>{{ user.first_name }}</td>
-        <td>{{ user.last_name }}</td>
-        <td>{{ user.email }}</td>
-      </tr>
-    </table>
+  <div class="main-homepage">
+    <CustomHeader title="My Concierge" subtitle=""/>
     <nav>
-        <RouterLink to="/">Home</RouterLink>
-        <RouterLink to="/dining">Dining</RouterLink>
-        <RouterLink to="/events">Events</RouterLink>
-        <RouterLink to="/spa">Spa</RouterLink>
-      </nav>
+      <RouterLink to="/">Home</RouterLink>
+      <RouterLink to="/dining">Dining</RouterLink>
+      <RouterLink to="/events">Events</RouterLink>
+      <RouterLink to="/spa">Spa</RouterLink>
+    </nav>
+    <main>
+      <div class="my-res">
+        <h2>My Reservations</h2>
+        <h3>Today</h3>
+        <div v-for="(res, index) in reservationsToday" :key="index">
+          <p>{{ resDetails(res) }}<span v-if="res.groupCount>1">{{ groupCountDetails(res.groupCount) }}</span></p>
+        </div>
+        <h3>Upcoming</h3>
+        <div v-for="(res, index) in reservationsUpcoming" :key="index">
+          <p>{{res.title}}: {{res.time}}<span v-if="res.groupCount>1">{{res.groupCount}} ppl</span></p>
+        </div>
+      </div>
+      <div class="todays-events">
+        <h2>Today's Events</h2> 
+        <p v-for="(event, index) in events" :key="index">{{ event }}</p>
+      </div>
+    </main>
   </div>
 </template>
 
 <script>
   import { RouterLink } from 'vue-router'
-  import HelloWorld from '../views/HelloWorld.vue'
+  import CustomHeader from './shared/CustomHeader.vue'
+  import dayjs from  'dayjs'
+
   export default {
     name: 'Home',
-    components: [
-      HelloWorld,
+    components: {
+      CustomHeader,
       RouterLink
-    ],
+    },
     data() {
       return {
-        header: 'Users',
+        events: [
+          'Pool Hours: 9:00-9:00',
+          'Spa Hours: 9:00-6:00',
+          'PickleBall Tournament 1:00-4:00',
+          'Swing Dance in Ballroom 4',
+          'Dinner Reservations Available Tonight'
+        ],
+        today: null,
+        reservations: [
+          {
+            title: 'Dinner',
+            date: null,
+            time: '6:00pm',
+            groupCount: 4
+          },
+          {
+            title: 'Sport Massage',
+            date: null,
+            time: '1:00pm',
+            groupCount: 1
+          }
+        ],
         users: []
       }
     },
     beforeMount() {
-      try {
-        fetch('/api/users/all')
-        .then(response => response.json())
-        .then(data => this.users = data.data)
-      } catch {
-        console.log('error fetching data')
-      }
-      
+      this.today = dayjs(new Date())
+      this.reservations[0].date = this.today;
+      this.reservations[1].date = this.today.add(1, 'day')
     },
     computed: {
       hasUserData() {
         return this.users.length > 0
+      },
+      reservationsToday() {
+        return this.reservations.filter((res) => { 
+          return res.date.isSame(this.today, 'day')
+        })
+      },
+      reservationsUpcoming() {
+        return this.reservations.filter((res) => { 
+          return res.date.isAfter(this.today, 'day') 
+        })
+      }
+    },
+    methods: {
+      resDetails(res) {
+        return `${res.title}: ${res.time} `
+      },
+      groupCountDetails(count) {
+        return `${count} ppl`
       }
     }
   }
@@ -65,56 +98,63 @@
   
 <style lang="scss">
 
-.logo {
-  display: block;
-  margin: 0 auto 2rem;
-}
-
-nav {
-  width: 100%;
-  font-size: 12px;
-  text-align: center;
-  margin-top: 2rem;
-  
-  a {
-    display: inline-block;
-    padding: 0 1rem;
-    border-left: 1px solid var(--color-border);
-    &:first-of-type {
-      border: 0;
+.main-homepage {
+  background-size: cover;
+  background-image: url("/src/assets/resort-entrance.jpg");
+  min-height: 100vh;  
+  nav {
+    margin: 0;
+    padding: 12px;
+    border-bottom: 1px solid black;
+    background-color: white;
+    text-align: center;
+  }
+  main {
+    display: flex;
+    justify-content: space-between;
+    padding: 100px;
+    gap: 80px;
+    height: 80vh;
+    .my-res,
+    .todays-events {
+      background-color: white;
+      border-radius: 12px;
+      flex-grow: 1;
+      font-family: 'Roboto', Arial, sans-serif;
+      font-size: 24px;
+      height: 100%;
+      opacity: 0.8;
+      padding: 20px;
+      text-align: center;
+      h2 {
+        border-bottom: 2px solid black;
+        color: black;
+        font-family: 'Manrope', Arial, sans-serif;
+        font-size: 32px;
+        font-weight: 600;
+        text-align: center;
+      }
+      h3 {
+        font-size: 24px;
+        font-weight: 600;
+        margin-top: 40px;
+      }
     }
-    .router-link-exact-active {
-      color: var(--color-text);
-      &:hover {
-        background-color: transparent;
+    .todays-events {
+      margin-left: 20px;
+      h2 {
+        margin-bottom: 40px;
+      }
+      p {
+        margin-bottom: 10px;
       }
     }
   }
-}
-
-
-
-@media (min-width: 1024px) {
-  header {
-    display: flex;
-    place-items: center;
-    padding-right: calc(var(--section-gap) / 2);
-    .logo {
-      margin: 0 2rem 0 0;
+  @media (max-width: 1200px) {
+    main {
+      gap: 40px;
+      padding: 40px;
     }
-    .wrapper {
-      display: flex;
-      place-items: flex-start;
-      flex-wrap: wrap;
-    }
-  }
-  nav {
-    text-align: left;
-    margin-left: -1rem;
-    font-size: 1rem;
-
-    padding: 1rem 0;
-    margin-top: 1rem;
   }
 }
 </style>

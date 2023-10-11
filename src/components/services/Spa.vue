@@ -1,22 +1,15 @@
 <template>
   <div class="spa-home">
-
-    <div>
-      <CustomHeader title="My Concierge" subtitle="Spa" />
-    </div>
-
-    <div class="navbar-container">
-      <nav>
-        <ul>
-          <li><a href="#">Home</a></li>
-          <li class="sep">|</li>
-          <li><a href="#">Calendar</a></li>
-          <li class="sep">|</li>
-          <li><a href="#">Services</a></li>
-        </ul>
-      </nav>
-    </div>
-
+    <CustomHeader title="My Concierge" subtitle="Spa" />
+    <nav>
+      <ul>
+        <li><a href="#">Home</a></li>
+        <li class="sep">|</li>
+        <li><a href="#">Calendar</a></li>
+        <li class="sep">|</li>
+        <li><a href="#">Services</a></li>
+      </ul>
+    </nav>
     <div class="main-container">
       <div class="col1">
         <div class="form-container">
@@ -24,32 +17,25 @@
             <div class="title">
               <h3>Make a Reservation</h3>
             </div>
-
             <div class="row">
               <input type="text">
               <input type="text">
             </div>
-
             <div class="row">
               <input type="text">
               <input type="text">
             </div>
-
             <div class="row">
               <button>Submit</button>
             </div>
-
           </div>
         </div>
-
         <div class="contact-container">
           <div class="contact">
             <h3>Contact the Spa: 555-222-5656</h3>
           </div>
         </div>
-
       </div>
-
       <div class="service-container">
         <div class="services">
           <div class="title">
@@ -57,9 +43,8 @@
               Spa Services
             </h3>
           </div>
-
           <div>
-            <li v-for="(item, index) in items">
+            <li v-for="(item, index) in items" :key="index">
               {{ item.message }}
             </li>
           </div>
@@ -96,43 +81,33 @@ export default {
 .spa-home {
     background-size: cover;
     background-image: url("/src/assets/massage-therapy.jpg");
-    min-height: 100vh;
-
-  .navbar-container {
-    li {
+    min-height: 100vh;  
+  nav {
+    background-color: white;
+    margin: 0;
+    text-align: center;
+      li {
       display: inline;
       list-style: none;
     }
-
-    nav {
-      background-color: white;
-      margin: 0;
-      text-align: center;
-
-      .sep {
-        color: black;
-      }
-
-      a {
-        text-decoration: none;
-        color: black;
-        /* Link color */
-      }
+    .sep {
+      color: black;
+    }
+    a {
+      text-decoration: none;
+      color: black;
     }
   }
-
   .main-container {
     display: flex;
     justify-content: space-around;
     flex-wrap: wrap;
     padding: 2em;
-
     .form-container {
       background-color: white;
       width: 500px;
       padding: 0.5em;
       border: solid 1px black;
-
       .row {
         display: flex;
         align-items: center;
@@ -140,7 +115,6 @@ export default {
         flex-wrap: wrap;
         margin: 4em;
       }
-
       .row input {
         width: 150px;
         height: 40px;
@@ -148,7 +122,6 @@ export default {
         border: 1px solid #cccccc;
         border-color: black;
       }
-
       h3 {
         text-align: center;
         border-bottom: solid 1px;
@@ -156,19 +129,16 @@ export default {
         padding: 10px;
       }
     }
-
     .service-container {
       background-color: white;
       width: 400px;
       border-radius: 10px;
-
       .services h3 {
         font-size: x-large;
         text-align: center;
         color: black;
         padding: 10px;
       }
-
       .services h3:after {
         content: ' ';
         display: block;
@@ -177,7 +147,6 @@ export default {
         margin-inline: auto;
         margin-block: 6px;
       }
-
       .services li {
         color: black;
         list-style-type: none;
@@ -186,14 +155,12 @@ export default {
         font-size: large;
       }
     }
-
     .contact-container {
       background-color: white;
       width: 500px;
       padding: 1em;
       border: solid 1px black;
       margin-top: 1em;
-
       .contact h3 {
         text-align: center;
         color: black;
