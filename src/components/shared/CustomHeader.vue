@@ -1,8 +1,8 @@
 <template>
-  <div class="header">
+  <div class="header" :class="fontColor">
     <img class=logo src="../../assets/butler.png">
     <h1>My Concierge</h1>
-    <h1 v-if="subtitle">&nbsp- {{ subtitle }}</h1>
+    <h1 v-if="subtitle">&nbsp;- {{ subtitle }}</h1>
   </div>
 </template>
   
@@ -17,7 +17,8 @@ export default {
       type: String
     },
     fontColor: {
-      type: String
+      type: String,
+      default: 'white'
     },
     backgroundColor: {
       type: String
@@ -35,6 +36,11 @@ export default {
   height: 180px;
   padding: 20px;
   width: 100%;
+  &.black {
+    h1 {
+      color: black;
+    }
+  }
   .logo {
     background-color: white;
     display: block;
