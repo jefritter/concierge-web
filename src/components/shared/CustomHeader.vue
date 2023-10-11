@@ -1,17 +1,8 @@
 <template>
   <div class="header">
     <img class=logo src="../../assets/butler.png">
-    <h1>
-      {{title}}
-    </h1>
-
-    <h1>
-      {{subtitle}}
-    </h1>
-    
-    <h1>
-      {{subtitle }}
-    </h1>
+    <h1>My Concierge</h1>
+    <h1 v-if="subtitle">&nbsp- {{ subtitle }}</h1>
   </div>
 </template>
   
@@ -23,8 +14,7 @@ export default {
       required: true
     },
     subtitle: {
-      type: String,
-      required: true
+      type: String
     },
     fontColor: {
       type: String
@@ -39,7 +29,6 @@ export default {
 <style lang="scss">
 .header {
   background-color: #84A7AE;
-  border-bottom: 1px solid black;
   display: flex;
   align-items: flex-end;
   justify-content: flex-start;
@@ -49,22 +38,16 @@ export default {
   .logo {
     background-color: white;
     display: block;
-    margin: 20px;
+    margin: 20px 40px;
     height: 100px;
     width: 100px;    
     border-radius: 6px;
-    
-    h1{
-      color: white;
-    }
   }
   h1 {
-    color: black;
+    color: white;
     font-family: 'Marcellus', Times, serif;
-    font-size: 2rem;
-    flex-grow: 2;
+    font-size: 3rem;
   }
-  
 }
 </style>
   
