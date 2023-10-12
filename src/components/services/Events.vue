@@ -8,9 +8,9 @@
     </nav>
     <main>
       <div class="left-column">
-        <div class="reservation-box">
-          <span>placeholder for reservation form</span>
-        </div>
+        <ReservationForm
+          :fields="fields"
+          @submitReservation="submitReservation"/>
         <div class="contact-box">
           <span>Contact Special Events: 555-222-7878</span>
         </div>
@@ -33,30 +33,76 @@
 
 <script>
   import CustomHeader from '@/components/shared/CustomHeader.vue';
+  import ReservationForm from '@/components/shared/ReservationForm.vue'
   export default {
     components: {
       CustomHeader,
+      ReservationForm
     },
     data() {
-       return {
-          events: [
-            {
-              title: 'La Scala Opera Trip',
-              reservations: 26,
-              openings: 14,
-              transportation: 'ABC Bus',
-              host: 'Andy Cohen'
-            },
-            {
-              title: 'Night Club Hop',
-              reservations: 10,
-              openings: 6,
-              transportation: 'XYZ Limo',
-              host: 'Joe Jackson, Patty Smith'
-            }
-          ]
-       }
-   }
+      return {
+        events: [
+          {
+            id: 1,
+            title: 'La Scala Opera Trip',
+            reservations: 26,
+            openings: 14,
+            transportation: 'ABC Bus',
+            host: 'Andy Cohen'
+          },
+          {
+            id: 2,
+            title: 'Night Club Hop',
+            reservations: 10,
+            openings: 6,
+            transportation: 'XYZ Limo',
+            host: 'Joe Jackson, Patty Smith'
+          }
+        ],
+        fields: [
+          {
+            id: 'event',
+            label: 'Event',
+            type: 'multi-select',
+            options: []
+          },
+          {
+            id: 'name',
+            label: 'Name',
+            type: 'text'
+          },
+          {
+            id: 'count',
+            label: '# in party',
+            type: 'number'
+          }
+        ]
+      }
+    },
+    beforeMount() {
+      this.fields[0].options = this.eventOptions
+    },
+    computed: {
+      eventOptions() {
+        return this.events.map((event) => {
+          return {
+            id: event.id,
+            title: event.title
+          }
+        })
+      }
+    },
+    methods: {
+      submitReservation(values) {
+        const isValid = this.validateInputs(values)
+        if (isValid) {
+          console.log('submitting')
+        }
+      },
+      validateInputs(values) {
+        return !!values
+      }
+    }
   }
 </script>
 
@@ -74,11 +120,11 @@
     main {
       background-image: url('@/assets/special-event-table.webp');
       background-size: cover; 
-      background-repeat: no-repeat;
-      background-position: center center;
-      flex-grow: 1;
+      // background-repeat: no-repeat;
+      // background-position: center center;
+      // flex-grow: 1;
       display: flex;
-      justify-content: space-between;
+      justify-content: space-around;
       padding: 20px;
       .right-column {
         flex-basis: 50%;

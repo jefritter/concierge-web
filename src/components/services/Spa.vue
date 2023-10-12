@@ -12,24 +12,10 @@
     </nav>
     <div class="main-container">
       <div class="col1">
-        <div class="form-container">
-          <div class="form-box">
-            <div class="title">
-              <h3>Make a Reservation</h3>
-            </div>
-            <div class="row">
-              <input type="text">
-              <input type="text">
-            </div>
-            <div class="row">
-              <input type="text">
-              <input type="text">
-            </div>
-            <div class="row">
-              <button>Submit</button>
-            </div>
-          </div>
-        </div>
+        <ReservationForm 
+          :fields="fields"
+          @submitReservation="submitReservation"
+          />
         <div class="contact-container">
           <div class="contact">
             <h3>Contact the Spa: 555-222-5656</h3>
@@ -44,8 +30,8 @@
             </h3>
           </div>
           <div>
-            <li v-for="(item, index) in items" :key="index">
-              {{ item.message }}
+            <li v-for="(item, index) in services" :key="index">
+              {{ item.title }}
             </li>
           </div>
         </div>
@@ -56,32 +42,92 @@
 
 <script>
 import CustomHeader from '../shared/CustomHeader.vue';
+import ReservationForm from '@/components/shared/ReservationForm.vue'
 
 export default {
   components: {
-    CustomHeader
+    CustomHeader,
+    ReservationForm
   },
   data() {
     return {
-      items: [
-        { message: 'Hot Stone Massage' },
-        { message: 'Sport Massage' },
-        { message: 'Swedish Massage' },
-        { message: 'Reflexology' },
-        { message: 'Facial' },
-        { message: 'Manicure' },
-        { message: 'Pedicure' }
+      services: [
+        { 
+          id: 1,
+          title: 'Hot Stone Massage'
+        },
+        { 
+          id: 2,
+          title: 'Sport Massage'
+        },
+        { 
+          id: 3,
+          title: 'Swedish Massage'
+        },
+        { 
+          id: 4,
+          title: 'Reflexology'
+        },
+        { 
+          id: 5,
+          title: 'Facial'
+        },
+        { 
+          id: 6,
+          title: 'Manicure'
+        },
+        { 
+          id: 7,
+          title: 'Pedicure'
+        }
+      ],
+      fields: [
+        {
+          id: 'date',
+          label: 'Date',
+          type: 'date'
+        },
+        {
+          id: 'time',
+          label: 'Time',
+          type: 'time'
+        },
+        {
+          id: 'name',
+          label: 'Name',
+          type: 'text'
+        },
+        {
+          id: 'service',
+          label: 'Service',
+          type: 'multi-select',
+          options: []
+        }
       ]
     };
   },
+  beforeMount() {
+    this.fields[3].options = this.services
+  },
+  methods: {
+      submitReservation(values) {
+        const isValid = this.validateInputs(values)
+        if (isValid) {
+          console.log('submitting')
+        }
+      },
+      validateInputs(values) {
+        return !!values;
+      }
+    }
 }
 </script>
   
 <style lang="scss">
 .spa-home {
-    background-size: cover;
-    background-image: url("/src/assets/massage-therapy.jpg");
-    min-height: 100vh;  
+  background-size: cover;
+  background-image: url("/src/assets/massage-therapy.jpg");
+  min-height: 100vh;  
   nav {
     background-color: white;
     margin: 0;
@@ -103,32 +149,6 @@ export default {
     justify-content: space-around;
     flex-wrap: wrap;
     padding: 2em;
-    .form-container {
-      background-color: white;
-      width: 500px;
-      padding: 0.5em;
-      border: solid 1px black;
-      .row {
-        display: flex;
-        align-items: center;
-        justify-content: space-around;
-        flex-wrap: wrap;
-        margin: 4em;
-      }
-      .row input {
-        width: 150px;
-        height: 40px;
-        border-radius: 8px;
-        border: 1px solid #cccccc;
-        border-color: black;
-      }
-      h3 {
-        text-align: center;
-        border-bottom: solid 1px;
-        color: black;
-        padding: 10px;
-      }
-    }
     .service-container {
       background-color: white;
       width: 400px;
