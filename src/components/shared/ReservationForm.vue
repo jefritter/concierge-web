@@ -57,10 +57,11 @@
     color: black;
     display: flex;
     flex-direction: column;
-    height: 400px;
+    flex-grow: 0;
+    height: auto;
     margin-bottom: 40px;
     padding: 20px 40px 40px 40px;
-    width: 580px;
+    max-width: 560px;
     .header {
       font-size: 24px;
       text-align: center;
@@ -69,7 +70,7 @@
     hr {
       border-top: 1px solid black;
       margin: 0 -40px;
-      width: 580px;
+      max-width: 580px;
     }
     .fields-container {
       display: flex;
@@ -78,7 +79,6 @@
       justify-content: space-between;
       margin-top: -20px;
       padding: 40px 0;
-      width: 100%;
       .field {
         display: flex;
         flex-direction: column;
@@ -119,6 +119,9 @@
           color: black; 
         }
       }
+    }
+    @media (max-width: 1208px) {
+      min-width: 300px;
     }
   }
   </style>

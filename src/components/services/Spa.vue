@@ -146,13 +146,17 @@ export default {
   }
   .main-container {
     display: flex;
+    gap: 6rem;
     justify-content: space-around;
     flex-wrap: wrap;
-    padding: 2em;
+    padding: 8em;
+    .col1 {
+      flex-basis: 50%;
+    }
     .service-container {
       background-color: white;
-      width: 400px;
       border-radius: 10px;
+      flex-basis: 40%;
       .services h3 {
         font-size: x-large;
         text-align: center;
@@ -177,7 +181,7 @@ export default {
     }
     .contact-container {
       background-color: white;
-      width: 500px;
+      max-width: 560px;
       padding: 1em;
       border: solid 1px black;
       margin-top: 1em;
@@ -201,12 +205,18 @@ export default {
   }
 
   @media (max-width: 767px) {
-
     .form-container,
     .service-container,
     .contact-container {
       width: 300px;
       margin: 1em;
+    }
+  }
+
+  @media (max-width: 1400px) {
+    .main-container {
+      padding: 4rem;
+      gap: 3rem;
     }
   }
 }

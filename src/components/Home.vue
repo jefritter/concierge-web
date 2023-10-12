@@ -112,8 +112,8 @@
   main {
     display: flex;
     justify-content: space-between;
-    padding: 100px;
-    gap: 80px;
+    padding: 8rem;
+    gap: 6rem;
     height: 80vh;
     .my-res,
     .todays-events {

@@ -119,19 +119,16 @@
     }
     main {
       background-image: url('@/assets/special-event-table.webp');
-      background-size: cover; 
-      // background-repeat: no-repeat;
-      // background-position: center center;
-      // flex-grow: 1;
+      background-size: cover;
       display: flex;
-      justify-content: space-around;
-      padding: 20px;
+      gap: 6rem;
+      justify-content: space-between;
+      padding: 8rem;
       .right-column {
         flex-basis: 50%;
-        margin: 150px;
         .events-box {
           background-color:white;
-          padding: 10px;
+          padding: 2rem 3rem;
           border-radius: 10px;
           h2 {
             font-size: 2rem;
@@ -141,16 +138,15 @@
           h2::after {
             content: "";
             display: block;
-            width: 70%;
-            height: 2px;
+            width: 76%;
+            height: 1px;
             background-color: #333;
-            margin: 10px auto;
+            margin: 0 auto;
             content: "";
           }
           .event-item {
-            margin-bottom: 20px;
+            margin-top: 1rem;
             padding: 10px;
-            margin-left: 100px;
           }
           .event-title {
             font-weight: bold;
@@ -162,27 +158,20 @@
         flex-basis: 50%;
         display: flex;
         flex-direction: column;
-        margin: 150px;
-        .reservation-box{
-          background-color:white;
-          flex-basis: 75%;
-          padding: 10px;
-          margin-bottom: 50px;
-          border: 1px solid black;
-        }
         .contact-box{
           background-color:white;
-          flex-basis: 25%;
           padding: 10px;
           border: 1px solid black;
-          display: flex;
-          align-items: center;
-          justify-content: center;
+          text-align: center;
+          width: 100%;
           span{
             font-size: 20px;
           }
         }
       }
+    }
+    @media (max-width: 1280) {
+      padding: 4rem;
     }
   }
 </style>
