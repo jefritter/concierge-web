@@ -112,7 +112,7 @@
   main {
     display: flex;
     justify-content: space-between;
-    padding: 8rem;
+    padding: 6rem;
     gap: 6rem;
     height: 80vh;
     .my-res,
@@ -152,8 +152,8 @@
   }
   @media (max-width: 1200px) {
     main {
-      gap: 40px;
-      padding: 40px;
+      gap: 4rem;
+      padding: 4rem;
     }
   }
 }
