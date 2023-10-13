@@ -1,5 +1,5 @@
 <template>
-  <div class="header" :class="fontColor">
+  <div class="main-header" :class="fontColor">
     <img class=logo src="../../assets/butler.png">
     <h1>My Concierge</h1>
     <h1 v-if="subtitle">&nbsp;- {{ subtitle }}</h1>
@@ -28,7 +28,7 @@ export default {
 </script>
 
 <style lang="scss">
-.header {
+.main-header {
   background-color: #84A7AE;
   display: flex;
   align-items: flex-end;
