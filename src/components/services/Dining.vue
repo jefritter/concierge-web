@@ -1,15 +1,17 @@
 <template>
-  <div class="spa-home">
-    <CustomHeader title="My Concierge" subtitle="Spa" />
+  <div class="dining-home">
+    <CustomHeader title="My Concierge" subtitle="Dining" />
+
     <nav>
       <ul>
         <li><a><router-link to="/">Home</router-link></a></li>
-          <li class="sep">|</li>
-          <li><a><router-link to="/calendar">Calendar</router-link></a></li>
-          <li class="sep">|</li>
-          <li><a><router-link to="/">Services</router-link></a></li>
+        <li class="sep">|</li>
+        <li><a><router-link to="/calendar">Calendar</router-link></a></li>
+        <li class="sep">|</li>
+        <li><a><router-link to="/">Services</router-link></a></li>
       </ul>
     </nav>
+
     <div class="main-container">
       <div class="col1">
         <ReservationForm 
@@ -22,6 +24,7 @@
           </div>
         </div>
       </div>
+      
       <div class="service-container">
         <div class="services">
           <div class="title">
@@ -31,7 +34,7 @@
           </div>
           <div v-for="(item, index) in items" :key="index" class="event-item">
             <h4 class="event-title">{{ item.title }}</h4>
-            <p><strong></strong> <span>{{ item.food }}</span></p>
+            <p class="event-list"><strong></strong> <span>{{ item.food }}</span></p>
           </div>
         </div>
       </div>
@@ -40,8 +43,8 @@
 </template>
 
 <script>
-import CustomHeader from '../shared/CustomHeader.vue';
-import ReservationForm from '../shared/ReservationForm.vue'
+import CustomHeader from '@/components/shared/CustomHeader.vue';
+import ReservationForm from '@/components/shared/ReservationForm.vue'
 
 export default {
   components: {
@@ -110,9 +113,9 @@ export default {
 </script>
   
 <style lang="scss">
-.spa-home {
+.dining-home {
   background-size: cover;
-  background-image: url("/src/assets/massage-therapy.jpg");
+  background-image: url("@/assets/fine-dining.jpg");
   min-height: 100vh;  
   nav {
     background-color: white;
@@ -191,14 +194,19 @@ export default {
   }
 
   .event-item {
-            margin-top: 1rem;
-            padding: 10px;
-            text-align: center;
-          }
-          .event-title {
-            font-weight: bold;
-            font-size: 1.5rem;
-          }
+    margin-top: 1rem;
+    padding: 10px;
+    text-align: center;
+  }
+
+  .event-title {
+    font-weight: bold;
+    font-size: 1.5rem;
+  }
+
+  .event-list {
+    font-size: 1.3rem;
+  }
 
   @media (max-width: 767px) {
     .form-container,
