@@ -1,45 +1,19 @@
 <template>
   <div class="spa-home">
-
-    <div>
-      <CustomHeader title="My Concierge" subtitle="Spa" />
-    </div>
-
+    <CustomHeader title="My Concierge" subtitle="Spa" />
     <NavBar />
-
     <div class="main-container">
       <div class="col1">
-        <div class="form-container">
-          <div class="form-box">
-            <div class="title">
-              <h3>Make a Reservation</h3>
-            </div>
-
-            <div class="row">
-              <input type="text">
-              <input type="text">
-            </div>
-
-            <div class="row">
-              <input type="text">
-              <input type="text">
-            </div>
-
-            <div class="row">
-              <button>Submit</button>
-            </div>
-
-          </div>
-        </div>
-
+        <ReservationForm 
+          :fields="fields"
+          @submitReservation="submitReservation"
+          />
         <div class="contact-container">
           <div class="contact">
             <h3>Contact the Spa: 555-222-5656</h3>
           </div>
         </div>
-
       </div>
-
       <div class="service-container">
         <div class="services">
           <div class="title">
@@ -47,10 +21,9 @@
               Spa Services
             </h3>
           </div>
-
           <div>
-            <li v-for="(item, index) in items">
-              {{ item.message }}
+            <li v-for="(item, index) in services" :key="index">
+              {{ item.title }}
             </li>
           </div>
         </div>
@@ -62,82 +35,113 @@
 <script>
 import CustomHeader from '../shared/CustomHeader.vue';
 import NavBar from '@/components/shared/NavBar.vue';
+import ReservationForm from '@/components/shared/ReservationForm.vue'
 
 export default {
   components: {
     CustomHeader,
-    NavBar
+    NavBar,
+    ReservationForm
   },
   data() {
     return {
-      items: [
-        { message: 'Hot Stone Massage' },
-        { message: 'Sport Massage' },
-        { message: 'Swedish Massage' },
-        { message: 'Reflexology' },
-        { message: 'Facial' },
-        { message: 'Manicure' },
-        { message: 'Pedicure' }
+      services: [
+        { 
+          id: 1,
+          title: 'Hot Stone Massage'
+        },
+        { 
+          id: 2,
+          title: 'Sport Massage'
+        },
+        { 
+          id: 3,
+          title: 'Swedish Massage'
+        },
+        { 
+          id: 4,
+          title: 'Reflexology'
+        },
+        { 
+          id: 5,
+          title: 'Facial'
+        },
+        { 
+          id: 6,
+          title: 'Manicure'
+        },
+        { 
+          id: 7,
+          title: 'Pedicure'
+        }
+      ],
+      fields: [
+        {
+          id: 'date',
+          label: 'Date',
+          type: 'date'
+        },
+        {
+          id: 'time',
+          label: 'Time',
+          type: 'time'
+        },
+        {
+          id: 'name',
+          label: 'Name',
+          type: 'text'
+        },
+        {
+          id: 'service',
+          label: 'Service',
+          type: 'multi-select',
+          options: []
+        }
       ]
     };
   },
+  beforeMount() {
+    this.fields[3].options = this.services
+  },
+  methods: {
+      submitReservation(values) {
+        const isValid = this.validateInputs(values)
+        if (isValid) {
+          console.log('submitting')
+        }
+      },
+      validateInputs(values) {
+        return !!values;
+      }
+    }
 }
 </script>
   
 <style lang="scss">
 .spa-home {
-    background-size: cover;
-    background-image: url("/src/assets/massage-therapy.jpg");
-    min-height: 100vh;
+  background-size: cover;
+  background-image: url("/src/assets/massage-therapy.jpg");
+  min-height: 100vh;  
 
   .main-container {
     display: flex;
+    gap: 6rem;
     justify-content: space-around;
     flex-wrap: wrap;
-    padding: 2em;
-
-    .form-container {
-      background-color: white;
-      width: 500px;
-      padding: 0.5em;
-      border: solid 1px black;
-
-      .row {
-        display: flex;
-        align-items: center;
-        justify-content: space-around;
-        flex-wrap: wrap;
-        margin: 4em;
-      }
-
-      .row input {
-        width: 150px;
-        height: 40px;
-        border-radius: 8px;
-        border: 1px solid #cccccc;
-        border-color: black;
-      }
-
-      h3 {
-        text-align: center;
-        border-bottom: solid 1px;
-        color: black;
-        padding: 10px;
-      }
+    padding: 8em;
+    .col1 {
+      flex-basis: 50%;
     }
-
     .service-container {
       background-color: white;
-      width: 400px;
       border-radius: 10px;
-
+      flex-basis: 40%;
       .services h3 {
         font-size: x-large;
         text-align: center;
         color: black;
         padding: 10px;
       }
-
       .services h3:after {
         content: ' ';
         display: block;
@@ -146,7 +150,6 @@ export default {
         margin-inline: auto;
         margin-block: 6px;
       }
-
       .services li {
         color: black;
         list-style-type: none;
@@ -155,14 +158,12 @@ export default {
         font-size: large;
       }
     }
-
     .contact-container {
       background-color: white;
-      width: 500px;
+      max-width: 560px;
       padding: 1em;
       border: solid 1px black;
       margin-top: 1em;
-
       .contact h3 {
         text-align: center;
         color: black;
@@ -183,12 +184,18 @@ export default {
   }
 
   @media (max-width: 767px) {
-
     .form-container,
     .service-container,
     .contact-container {
       width: 300px;
       margin: 1em;
+    }
+  }
+
+  @media (max-width: 1400px) {
+    .main-container {
+      padding: 4rem;
+      gap: 3rem;
     }
   }
 }
