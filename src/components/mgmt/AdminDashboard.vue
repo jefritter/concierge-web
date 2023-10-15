@@ -8,7 +8,9 @@
           id="managers"
           :columns="managerCols"
           :rowData="managers"
-          title="Managers"/>
+          title="Managers"
+          @addItem="addManager"
+          @deleteItem="deleteManager"/>
         <BasicTable
           id="services"
           :columns="serviceCols"
@@ -74,7 +76,16 @@ export default {
       msg: 'Work in Progress ...'
     }
   },
-
+  methods: {
+    addManager(obj) {
+      console.log('manager added')
+      console.log(JSON.stringify(obj))
+    },
+    deleteManager(mgr) {
+      console.log('manager deleted')
+      console.log(JSON.stringify(mgr))
+    }
+  }
 }
 </script>
 
