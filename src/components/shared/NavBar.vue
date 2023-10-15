@@ -1,15 +1,10 @@
 <template>
   <div class="navbar">
     <nav>
-      <ul>
-        <li><router-link to="/">Home</router-link></li>
-        <li class="sep">|</li>
-        <li><router-link to="/dining">Dining</router-link></li>
-        <li class="sep">|</li>
-        <li><router-link to="/events">Events</router-link></li>
-        <li class="sep">|</li>
-        <li><router-link to="/spa">Spa</router-link></li>
-      </ul>
+      <router-link to="/">Home</router-link>
+      <router-link to="/dining">Dining</router-link>
+      <router-link to="/events">Events</router-link>
+      <router-link to="/spa">Spa</router-link>
     </nav>
   </div>
 </template>
@@ -20,34 +15,10 @@
   }
 </script>
   
-<style scoped>
-  .navbar {
-    background-color: white;
-    text-align: center;
-  }
-
-  .navbar  ul {
-    list-style-type: none;
-    padding: 0;
-    margin: 0;
-  }
-
-  .navbar li {
-    display: inline;
-  }
-
-  .navbar .sep {
-    margin: 0 10px;
-    color: black;
-  }
-
-  .navbar a {
-    text-decoration: none;
-    color: black;
-  }
-
+<style>
   nav {
     padding: 10px;
     text-align: center;
+    background-color:white;
   }
 </style>

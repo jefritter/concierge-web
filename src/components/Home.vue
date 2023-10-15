@@ -4,6 +4,7 @@
       <img alt="Vue logo" class="logo" src="@/assets/logo.svg" width="125" height="125" />
     </header>
     <h1>{{ header }}</h1>
+    <NavBar />
     <table v-if="hasUserData">
       <tr>
         <th>Id</th>
@@ -18,7 +19,6 @@
         <td>{{ user.email }}</td>
       </tr>
     </table>
-    <NavBar />
   </div>
 </template>
 
