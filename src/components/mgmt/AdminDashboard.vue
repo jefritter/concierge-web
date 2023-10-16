@@ -15,7 +15,9 @@
           id="services"
           :columns="serviceCols"
           :rowData="services"
-          title="Services"/>
+          title="Services"
+          @addItem="addService"
+          @deleteItem="deleteService"/>
       </div>
       <div></div>
     </div>
@@ -84,6 +86,14 @@ export default {
     deleteManager(mgr) {
       console.log('manager deleted')
       console.log(JSON.stringify(mgr))
+    },
+    addService(obj) {
+      console.log('service added')
+      console.log(JSON.stringify(obj))
+    },
+    deleteService(svc) {
+      console.log('service deleted')
+      console.log(JSON.stringify(svc))
     }
   }
 }
