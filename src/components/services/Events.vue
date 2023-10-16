@@ -1,11 +1,7 @@
 <template>
   <div class="events-home">
     <CustomHeader title="My Concierge" subtitle="Special Events"/>
-    <nav>
-      <router-link to="/">Home</router-link>
-      <router-link to="/calendar">Calendar</router-link>
-      <router-link to="/services">Services</router-link>
-    </nav>
+    <NavBar />
     <main>
       <div class="left-column">
         <ReservationForm
@@ -33,10 +29,13 @@
 
 <script>
   import CustomHeader from '@/components/shared/CustomHeader.vue';
+  import NavBar from '@/components/shared/NavBar.vue';
   import ReservationForm from '@/components/shared/ReservationForm.vue'
+
   export default {
     components: {
       CustomHeader,
+      NavBar,
       ReservationForm
     },
     data() {
@@ -113,10 +112,6 @@
     display: flex;
     flex-direction: column;
     min-height: 100vh; 
-    nav {
-      padding: 10px;
-      text-align: center;
-    }
     main {
       background-image: url('@/assets/special-event-table.webp');
       background-size: cover;
