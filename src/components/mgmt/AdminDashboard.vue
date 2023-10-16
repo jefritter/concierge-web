@@ -5,14 +5,17 @@
     <div class="content">
       <h1>Admin Dashboard</h1>
       <h3 class="greetings">{{ msg }}</h3>
+      <BarChart/>
     </div>
   </div>
 </template>
 
 <script>
 import CustomHeader from '../shared/CustomHeader.vue'
+import BarChart from '@/components/shared/BarChart.vue'
 export default {
   components: {
+    BarChart,
     CustomHeader
   },
   data() {
@@ -35,6 +38,10 @@ export default {
     margin-top: 100px;
     position: relative;
     margin-top: 200px;
+    .bar-chart {
+      height: auto;
+      width: 50%;
+    }
   }
   h1 {
     font-weight: 500;
