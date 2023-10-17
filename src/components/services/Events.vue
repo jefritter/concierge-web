@@ -1,18 +1,12 @@
 <template>
   <div class="events-home">
     <CustomHeader title="My Concierge" subtitle="Special Events"/>
-
-    <nav>
-      <router-link to="/">Home</router-link>
-      <router-link to="/calendar">Calendar</router-link>
-      <router-link to="/services">Services</router-link>
-    </nav>
-
+    <NavBar />
     <main>
       <div class="left-column">
-        <div class="reservation-box">
-          <span>placeholder for reservation form</span>
-        </div>
+        <ReservationForm
+          :fields="fields"
+          @submitReservation="submitReservation"/>
         <div class="contact-box">
           <span>Contact Special Events: 555-222-7878</span>
         </div>
@@ -35,30 +29,79 @@
 
 <script>
   import CustomHeader from '@/components/shared/CustomHeader.vue';
+  import NavBar from '@/components/shared/NavBar.vue';
+  import ReservationForm from '@/components/shared/ReservationForm.vue'
+
   export default {
     components: {
       CustomHeader,
+      NavBar,
+      ReservationForm
     },
     data() {
-       return {
-          events: [
-            {
-              title: 'La Scala Opera Trip',
-              reservations: 26,
-              openings: 14,
-              transportation: 'ABC Bus',
-              host: 'Andy Cohen'
-            },
-            {
-              title: 'Night Club Hop',
-              reservations: 10,
-              openings: 6,
-              transportation: 'XYZ Limo',
-              host: 'Joe Jackson, Patty Smith'
-            }
-          ]
-       }
-   }
+      return {
+        events: [
+          {
+            id: 1,
+            title: 'La Scala Opera Trip',
+            reservations: 26,
+            openings: 14,
+            transportation: 'ABC Bus',
+            host: 'Andy Cohen'
+          },
+          {
+            id: 2,
+            title: 'Night Club Hop',
+            reservations: 10,
+            openings: 6,
+            transportation: 'XYZ Limo',
+            host: 'Joe Jackson, Patty Smith'
+          }
+        ],
+        fields: [
+          {
+            id: 'event',
+            label: 'Event',
+            type: 'multi-select',
+            options: []
+          },
+          {
+            id: 'name',
+            label: 'Name',
+            type: 'text'
+          },
+          {
+            id: 'count',
+            label: '# in party',
+            type: 'number'
+          }
+        ]
+      }
+    },
+    beforeMount() {
+      this.fields[0].options = this.eventOptions
+    },
+    computed: {
+      eventOptions() {
+        return this.events.map((event) => {
+          return {
+            id: event.id,
+            title: event.title
+          }
+        })
+      }
+    },
+    methods: {
+      submitReservation(values) {
+        const isValid = this.validateInputs(values)
+        if (isValid) {
+          console.log('submitting')
+        }
+      },
+      validateInputs(values) {
+        return !!values
+      }
+    }
   }
 </script>
 
@@ -69,87 +112,61 @@
     display: flex;
     flex-direction: column;
     min-height: 100vh; 
-
-    nav {
-      padding: 10px;
-      text-align: center;
-    }
-
     main {
       background-image: url('@/assets/special-event-table.webp');
-      background-size: cover; 
-      background-repeat: no-repeat;
-      background-position: center center;
-      flex-grow: 1;
+      background-size: cover;
       display: flex;
+      gap: 6rem;
       justify-content: space-between;
-      padding: 20px;
-
+      padding: 8rem;
       .right-column {
         flex-basis: 50%;
-        margin: 150px;
-
         .events-box {
           background-color:white;
-          padding: 10px;
+          padding: 2rem 3rem;
           border-radius: 10px;
-
           h2 {
             font-size: 2rem;
             font-weight: bold;
             text-align: center;
           }
-
           h2::after {
             content: "";
             display: block;
-            width: 70%;
-            height: 2px;
+            width: 76%;
+            height: 1px;
             background-color: #333;
-            margin: 10px auto;
+            margin: 0 auto;
             content: "";
           }
-
           .event-item {
-            margin-bottom: 20px;
+            margin-top: 1rem;
             padding: 10px;
-            margin-left: 100px;
           }
-
           .event-title {
             font-weight: bold;
             font-size: 1.2rem;
           }
         }
       }
-
       .left-column {
         flex-basis: 50%;
         display: flex;
         flex-direction: column;
-        margin: 150px;
-
-        .reservation-box{
-          background-color:white;
-          flex-basis: 75%;
-          padding: 10px;
-          margin-bottom: 50px;
-          border: 1px solid black;
-        }
-
         .contact-box{
           background-color:white;
-          flex-basis: 25%;
           padding: 10px;
           border: 1px solid black;
-          display: flex;
-          align-items: center;
-          justify-content: center;
+          text-align: center;
+          width: 100%;
           span{
             font-size: 20px;
           }
         }
       }
+    }
+    @media (max-width: 1280) {
+      padding: 4rem;
     }
   }
 </style>
