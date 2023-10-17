@@ -1,23 +1,99 @@
 <template>
   <div class="admin-dashboard">
     <CustomHeader
-      title="Concierge - Admin"/>
+      subtitle="Admin"/>
     <div class="content">
-      <h1>Admin Dashboard</h1>
-      <h3 class="greetings">{{ msg }}</h3>
+      <div class="col left">
+        <BasicTable 
+          id="managers"
+          :columns="managerCols"
+          :rowData="managers"
+          title="Managers"
+          @addItem="addManager"
+          @deleteItem="deleteManager"/>
+        <BasicTable
+          id="services"
+          :columns="serviceCols"
+          :rowData="services"
+          title="Services"
+          @addItem="addService"
+          @deleteItem="deleteService"/>
+      </div>
+      <div></div>
     </div>
   </div>
 </template>
 
 <script>
-import CustomHeader from '../shared/CustomHeader.vue'
+import CustomHeader from '@/components/shared/CustomHeader.vue'
+import BasicTable from '@/components/shared/BasicTable.vue'
 export default {
   components: {
-    CustomHeader
+    CustomHeader,
+    BasicTable
   },
   data() {
     return {
-        msg: 'Work in Progress ...'
+      managers: [
+        {
+          name: 'Abby Wright',
+          dept: 'Spa'
+        },
+        {
+          name: 'Beau Dean',
+          dept: 'Dining'
+        },
+        {
+          name: 'Charles Host',
+          dept: 'Events'
+        }
+      ],
+      managerCols: [
+        {
+          id: 'name',
+          label: 'Name'
+        },
+        {
+          id: 'dept',
+          label: 'Department'
+        }
+      ],
+      services: [
+        {
+          dept: 'Spa'
+        },
+        {
+          dept: 'Dining'
+        },
+        {
+          dept: 'Events'
+        }
+      ],
+      serviceCols: [
+        {
+          id: 'dept',
+          label: 'Department'
+        }
+      ],
+      msg: 'Work in Progress ...'
+    }
+  },
+  methods: {
+    addManager(obj) {
+      console.log('manager added')
+      console.log(JSON.stringify(obj))
+    },
+    deleteManager(mgr) {
+      console.log('manager deleted')
+      console.log(JSON.stringify(mgr))
+    },
+    addService(obj) {
+      console.log('service added')
+      console.log(JSON.stringify(obj))
+    },
+    deleteService(svc) {
+      console.log('service deleted')
+      console.log(JSON.stringify(svc))
     }
   }
 }
@@ -28,22 +104,23 @@ export default {
   display: flex;
   flex-direction: column;
   height: 100vh;
+  .main-header {
+    background-color: #ECEBEB;
+    h1 {
+      color: #84A7AE;
+    }
+  }
   .content {
     display: flex;
-    flex-direction: column;
-    align-items: center;
-    margin-top: 100px;
-    position: relative;
-    margin-top: 200px;
-  }
-  h1 {
-    font-weight: 500;
-    font-size: 2.6rem;
-  }
-  
-  h3 {
-    font-size: 1.2rem;
-    text-align: center;
+    padding: 4rem;
+    .col {
+      align-items: center;
+      display: flex;
+      flex-direction: column;
+    }
+    .basic-table.services {
+      margin-top: 4rem;
+    }
   }
   
   @media (min-width: 1024px) {
