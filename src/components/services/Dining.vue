@@ -1,26 +1,16 @@
 <template>
   <div class="dining-home">
     <CustomHeader title="My Concierge" subtitle="Dining" />
-
-    <nav>
-      <ul>
-        <li><a><router-link to="/">Home</router-link></a></li>
-        <li class="sep">|</li>
-        <li><a><router-link to="/calendar">Calendar</router-link></a></li>
-        <li class="sep">|</li>
-        <li><a><router-link to="/">Services</router-link></a></li>
-      </ul>
-    </nav>
-
+    <NavBar />
     <div class="main-container">
       <div class="col1">
         <ReservationForm 
           :fields="fields"
           @submitReservation="submitReservation"
-          />
+        />
         <div class="contact-container">
           <div class="contact">
-            <h3>Contact the Spa: 555-222-5656</h3>
+            <h3>Contact the Restaurant: 555-222-5656</h3>
           </div>
         </div>
       </div>
@@ -45,11 +35,13 @@
 <script>
 import CustomHeader from '@/components/shared/CustomHeader.vue';
 import ReservationForm from '@/components/shared/ReservationForm.vue'
+import NavBar from '@/components/shared/NavBar.vue';
 
 export default {
   components: {
     CustomHeader,
-    ReservationForm
+    ReservationForm,
+    NavBar
   },
   data() {
     return {
@@ -87,16 +79,25 @@ export default {
           type: 'text'
         },
         {
-          id: 'service',
-          label: 'Service',
-          type: 'multi-select',
-          options: []
+          id: 'count',
+          label: '# in party',
+          type: 'number'
         }
       ]
     };
   },
   beforeMount() {
-    this.fields[3].options = this.items
+    this.fields[0].options = this.items
+  },
+  computed: {
+      eventOptions() {
+        return this.events.map((event) => {
+          return {
+            id: event.id,
+            title: event.title
+          }
+        })
+      }
   },
   methods: {
       submitReservation(values) {
@@ -113,6 +114,8 @@ export default {
 </script>
   
 <style lang="scss">
+@import '@/assets/base.css';
+@import '@/assets/main.css';
 .dining-home {
   background-size: cover;
   background-image: url("@/assets/fine-dining.jpg");
