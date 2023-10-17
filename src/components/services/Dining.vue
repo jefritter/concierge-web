@@ -24,7 +24,7 @@
           </div>
           <div v-for="(item, index) in items" :key="index" class="event-item">
             <h4 class="event-title">{{ item.title }}</h4>
-            <p class="event-list"><strong></strong> <span>{{ item.food }}</span></p>
+            <p class="event-list"><span>{{ item.food }}</span></p>
           </div>
         </div>
       </div>
@@ -120,22 +120,7 @@ export default {
   background-size: cover;
   background-image: url("@/assets/fine-dining.jpg");
   min-height: 100vh;  
-  nav {
-    background-color: white;
-    margin: 0;
-    text-align: center;
-      li {
-      display: inline;
-      list-style: none;
-    }
-    .sep {
-      color: black;
-    }
-    a {
-      text-decoration: none;
-      color: black;
-    }
-  }
+
   .main-container {
     display: flex;
     gap: 6rem;
@@ -163,13 +148,6 @@ export default {
         margin-inline: auto;
         margin-block: 6px;
       }
-      .services li {
-        color: black;
-        list-style-type: none;
-        text-align: center;
-        line-height: 3em;
-        font-size: large;
-      }
     }
     .contact-container {
       background-color: white;
@@ -182,13 +160,6 @@ export default {
         color: black;
       }
     }
-  }
-
-  h1 {
-    font-weight: 500;
-    font-size: 2.6rem;
-    position: relative;
-    top: -10px;
   }
 
   h3 {
