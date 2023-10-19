@@ -207,6 +207,7 @@ export default {
   .content {
     display: flex;
     padding: 4rem;
+    gap: 6rem;
     .col {
       align-items: center;
       display: flex;
