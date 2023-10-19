@@ -17,6 +17,7 @@ export default {
   components: {
     Bar
   },
+  // uncomment the props below when we have chart data coming from the API
   /* props: {
     chartId: {
       type: String
@@ -34,7 +35,7 @@ export default {
           { 
             label: 'Dining',
             data: [40, 20, 50],
-            backgroundColor: 'blue'
+            backgroundColor: '#2e327d'
           },
           { 
             label: 'Events',
@@ -44,7 +45,7 @@ export default {
           { 
             label: 'Spa',
             data: [50, 40, 30],
-            backgroundColor: 'red'
+            backgroundColor: '#ab1302'
           } 
         ]
       },
@@ -57,32 +58,9 @@ export default {
 </script>
   
 <style lang="scss">
-.main-header {
-  background-color: #84A7AE;
-  display: flex;
-  align-items: flex-end;
-  justify-content: flex-start;
-  height: 180px;
-  padding: 20px;
-  width: 100%;
-  &.black {
-    h1 {
-      color: black;
-    }
-  }
-  .logo {
-    background-color: white;
-    display: block;
-    margin: 20px 40px;
-    height: 100px;
-    width: 100px;    
-    border-radius: 6px;
-  }
-  h1 {
-    color: white;
-    font-family: 'Marcellus', Times, serif;
-    font-size: 3rem;
-  }
+.bar-chart {
+  height: auto;
+  width: 40%;
 }
 </style>
     

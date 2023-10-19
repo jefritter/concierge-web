@@ -38,10 +38,6 @@ export default {
     margin-top: 100px;
     position: relative;
     margin-top: 200px;
-    .bar-chart {
-      height: auto;
-      width: 50%;
-    }
   }
   h1 {
     font-weight: 500;
