@@ -3,7 +3,6 @@
     <CustomHeader
       subtitle="Admin"/>
     <div class="content">
-      <BarChart/>
       <div class="col left">
         <BasicTable 
           id="managers"
@@ -20,7 +19,14 @@
           @addItem="addService"
           @deleteItem="deleteService"/>
       </div>
-      <div></div>
+      <div class="col right">
+        <h2>Revenue by Service</h2>
+        <BarChart
+          :chartData="chartData"
+          chartId="revenue"
+        />
+        <button @click="downloadReport">Download Report</button>
+      </div>
     </div>
   </div>
 </template>
@@ -79,7 +85,29 @@ export default {
           label: 'Department'
         }
       ],
-      msg: 'Work in Progress ...'
+      chartData: {
+        labels: ['January', 'February', 'March'],
+        datasets: [ 
+          { 
+            label: 'Dining',
+            data: [40, 20, 50],
+            backgroundColor: '#2e327d'
+          },
+          { 
+            label: 'Events',
+            data: [30, 10, 18],
+            backgroundColor: 'orange'
+          }, 
+          { 
+            label: 'Spa',
+            data: [50, 40, 30],
+            backgroundColor: '#ab1302'
+          } 
+        ]
+      },
+      chartOptions: {
+        responsive: false
+      }
     }
   },
   methods: {
@@ -98,6 +126,68 @@ export default {
     deleteService(svc) {
       console.log('service deleted')
       console.log(JSON.stringify(svc))
+    },
+    convertLabelsToCSV(labels) {
+      let result
+      const columnDelimiter = ','
+      const lineDelimiter = '\n'
+
+      if (labels == null || !labels.length) {
+        return null
+      }
+
+      result = '' + columnDelimiter
+      result += labels.join(columnDelimiter)
+      result += lineDelimiter
+
+      return result
+    },
+    convertChartDataToCSV(dataset) {
+      console.log('dataset: ', dataset)
+      let result = ''
+      const columnDelimiter = ','
+      const lineDelimiter = '\n'
+
+      const data = dataset.data
+      if (data == null || !data.length) {
+        return null
+      }
+
+      result += dataset.label.toString()
+
+      for (let i = 0; i < data.length; i++) {
+        result += columnDelimiter
+        result += data[i]
+      }
+      
+      result += lineDelimiter
+
+      return result
+    },
+    downloadReport() {
+
+      let csv = ''
+      csv += this.convertLabelsToCSV(this.chartData.labels)
+
+      for (let i = 0; i < this.chartData.datasets.length; i++) {
+        csv += this.convertChartDataToCSV(this.chartData.datasets[i])
+      }
+
+      if (csv == null) return
+      console.log(csv)
+
+      if (!csv.match(/^data:text\/csv/i)) {
+        csv = 'data:text/csv;charset=utf-8,' + csv;
+      }
+      
+      const data = encodeURI(csv)
+      const link = document.createElement('a')
+      const filename = 'chart-data.csv'
+      link.setAttribute('href', data)
+      link.setAttribute('download', filename)
+      document.body.appendChild(link)
+      link.click()
+      document.body.removeChild(link)
     }
   }
 }
@@ -120,7 +210,35 @@ export default {
     .col {
       align-items: center;
       display: flex;
+      flex-basis: 50%;
       flex-direction: column;
+      position: relative;
+      &.right {
+        button {
+          all: unset;
+          background-color: white;
+          border: 1px solid black;
+          border-radius: 6px;
+          color: black;
+          font-family: 'Manrope', Arial, sans-serif;
+          font-size: 16px;
+          font-weight: 500;
+          text-align: center;
+          height: 45px;
+          margin-top: 2rem;
+          width: 166px;
+          &:hover {
+            background-color: #ECEBEB;
+            border: 2px solid black;
+          }
+        }
+        h2 {
+          font-family: 'Manrope', Arial, sans-serif;
+          font-size: 24px;
+          font-weight: 400;
+          margin-bottom: 1rem;
+        }
+      }
     }
     .basic-table.services {
       margin-top: 4rem;

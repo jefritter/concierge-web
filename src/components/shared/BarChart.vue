@@ -17,8 +17,7 @@ export default {
   components: {
     Bar
   },
-  // uncomment the props below when we have chart data coming from the API
-  /* props: {
+  props: {
     chartId: {
       type: String
     },
@@ -26,41 +25,14 @@ export default {
       type: Object,
       required: true
     }
-  }, */
-  data() {
-    return {
-      chartData: {
-        labels: ['January', 'February', 'March'],
-        datasets: [ 
-          { 
-            label: 'Dining',
-            data: [40, 20, 50],
-            backgroundColor: '#2e327d'
-          },
-          { 
-            label: 'Events',
-            data: [30, 10, 18],
-            backgroundColor: 'orange'
-          }, 
-          { 
-            label: 'Spa',
-            data: [50, 40, 30],
-            backgroundColor: '#ab1302'
-          } 
-        ]
-      },
-      chartOptions: {
-        responsive: false
-      }
-    }
-  }
+  },
 }
 </script>
   
 <style lang="scss">
 .bar-chart {
   height: auto;
-  width: 40%;
+  width: 100%;
 }
 </style>
     
