@@ -1,15 +1,7 @@
 <template>
   <div class="spa-home">
     <CustomHeader title="My Concierge" subtitle="Spa" />
-    <nav>
-      <ul>
-        <li><a href="#">Home</a></li>
-        <li class="sep">|</li>
-        <li><a href="#">Calendar</a></li>
-        <li class="sep">|</li>
-        <li><a href="#">Services</a></li>
-      </ul>
-    </nav>
+    <NavBar />
     <div class="main-container">
       <div class="col1">
         <ReservationForm 
@@ -42,11 +34,13 @@
 
 <script>
 import CustomHeader from '../shared/CustomHeader.vue';
+import NavBar from '@/components/shared/NavBar.vue';
 import ReservationForm from '@/components/shared/ReservationForm.vue'
 
 export default {
   components: {
     CustomHeader,
+    NavBar,
     ReservationForm
   },
   data() {
@@ -128,22 +122,7 @@ export default {
   background-size: cover;
   background-image: url("/src/assets/massage-therapy.jpg");
   min-height: 100vh;  
-  nav {
-    background-color: white;
-    margin: 0;
-    text-align: center;
-      li {
-      display: inline;
-      list-style: none;
-    }
-    .sep {
-      color: black;
-    }
-    a {
-      text-decoration: none;
-      color: black;
-    }
-  }
+
   .main-container {
     display: flex;
     gap: 6rem;

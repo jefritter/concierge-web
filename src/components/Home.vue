@@ -1,12 +1,7 @@
 <template>
   <div class="main-homepage">
     <CustomHeader title="My Concierge" subtitle=""/>
-    <nav>
-      <RouterLink to="/">Home</RouterLink>
-      <RouterLink to="/dining">Dining</RouterLink>
-      <RouterLink to="/events">Events</RouterLink>
-      <RouterLink to="/spa">Spa</RouterLink>
-    </nav>
+    <NavBar />
     <main>
       <div class="my-res">
         <h2>My Reservations</h2>
@@ -28,15 +23,15 @@
 </template>
 
 <script>
-  import { RouterLink } from 'vue-router'
   import CustomHeader from './shared/CustomHeader.vue'
+  import NavBar from '@/components/shared/NavBar.vue';
   import dayjs from  'dayjs'
 
   export default {
     name: 'Home',
     components: {
+      NavBar,
       CustomHeader,
-      RouterLink
     },
     data() {
       return {
