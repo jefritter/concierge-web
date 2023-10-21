@@ -8,19 +8,39 @@
         <th v-for="(col, index) in columns" :key="`th=${index}`">{{ col.label }}</th>
         <th class="controls"></th>
       </tr>
-      <tr v-for="(row, index) in rowData" :key="`row-${index}`">
-        <td v-for="(col, index) in columns" :key="index">{{ row[col.id] }}</td>
+      <tr v-for="(row, rowIndex) in rowData" :key="`row-${rowIndex}`">
+        <td v-for="(col, colIndex) in columns" :key="`td-${rowIndex}-${colIndex}`">{{ row[col.id] }}</td>
         <td class="controls">
-          <button @click="updateItem(index)">Update</button>
-          <button class="delete" @click="deleteItem(index)">Delete</button>
+          <button @click="openUpdateModal(rowIndex)">Update</button>
+          <button class="delete" @click="deleteItem(rowIndex)">Delete</button>
         </td>
       </tr>
     </table>
+    <teleport to='body'>
+      <Modal :show="showUpdateModal" @close="showUpdateModal = false">
+        <template #header>
+          <h3>Update Reservation</h3>
+        </template>
+        <template #body>
+          <div class="update-res">
+            <div v-for="(col, index) in columns" :key="index" class="input-container">
+              <input type="text" v-model="newItemValues[col.id]" :id="`${col.id}-input`">
+              <label :for="`${col.id}-input`">{{ col.label }}</label>
+            </div>
+            <button @click="submitUpdate" class="submit active">Submit</button>
+          </div>
+        </template>
+      </Modal>
+    </teleport>
   </div>
 </template>
   
 <script>
+  import Modal from '../shared/Modal.vue'
   export default {
+    components: {
+      Modal
+    },
     props: {
       id: {
         type: String,
@@ -41,7 +61,8 @@
     },
     data() {
       return {
-        newItemValues: null
+        newItemValues: null,
+        showUpdateModal: false
       }
     },
     beforeMount() {
@@ -68,8 +89,19 @@
       deleteItem(index) {
         this.$emit('deleteItem', this.rowData[index])
       },
-      updateItem() {
+      openUpdateModal(index) {
+        const data = this.rowData[index]
+        const keys = Object.keys(data)
+        keys.forEach(key => {
+          this.newItemValues[key] = data[key]
+        }) 
+        this.showUpdateModal = true
+      },
+      submitUpdate() {
+        console.log('update submitted')
+        console.log(this.newItemValues)
         this.$emit('updateItem', this.newItemValues)
+        this.showUpdateModal = false
       }
     }
   }
