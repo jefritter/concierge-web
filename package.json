@@ -11,6 +11,8 @@
     "format": "prettier --write src/"
   },
   "dependencies": {
+    "@fullcalendar/vue3": "^6.1.9",
+    "fullcalendar": "^6.1.9",
     "pinia": "^2.1.6",
     "vue": "^3.3.4",
     "vue-router": "^4.2.4"
