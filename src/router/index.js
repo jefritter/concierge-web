@@ -4,6 +4,7 @@ import Dining from '../components/services/Dining.vue'
 import Events from '../components/services/Events.vue'
 import Spa from '../components/services/Spa.vue'
 import AdminDashboard from '../components/mgmt/AdminDashboard.vue'
+import SpaManagement from '../components/mgmt/SpaManagement.vue'
 
 const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),
@@ -32,6 +33,11 @@ const router = createRouter({
       path: '/admin',
       name: 'admin',
       component: AdminDashboard
+    },
+    {
+      path: '/mgmt/spa',
+      name: 'spa-mgmt',
+      component: SpaManagement
     },
     {
       path: '/about',
