@@ -115,6 +115,7 @@
     main {
       background-image: url('@/assets/special-event-table.webp');
       background-size: cover;
+      height: 100vh;
       display: flex;
       gap: 6rem;
       justify-content: space-between;

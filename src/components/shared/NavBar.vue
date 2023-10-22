@@ -21,5 +21,6 @@
     padding: 10px;
     justify-content: center;
     background-color:white;
+    width: 100vw;
   }
 </style>
