@@ -1,6 +1,7 @@
 import { createRouter, createWebHistory } from 'vue-router'
 import Home from '../components/Home.vue'
 import Calendar from '../components/Calendar.vue'
+import Services from '../components/Services.vue'
 import Dining from '../components/services/Dining.vue'
 import Events from '../components/services/Events.vue'
 import Spa from '../components/services/Spa.vue'
@@ -19,6 +20,11 @@ const router = createRouter({
       path: '/calendar',
       name: 'calendar',
       component: Calendar
+    },
+    {
+      path: '/services',
+      name: 'services',
+      component: Services
     },
     {
       path: '/dining',
