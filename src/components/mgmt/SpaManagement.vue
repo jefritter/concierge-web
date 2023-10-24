@@ -2,7 +2,7 @@
   <div class="spa-management">
     <CustomHeader
       subtitle="Admin"/>
-    <NavBar :additionalLink="spaHomeLink" />
+    <NavBar class="navbar" :additionalLink="spaHomeLink" />
     <h2>Spa Management</h2>
     <div class="content">
       <div class="col left">
@@ -156,6 +156,11 @@ export default {
   display: flex;
   flex-direction: column;
   height: 100vh;
+
+  .navbar {
+    border-top: 1px solid black;
+    border-bottom: 1px solid black;
+  }
   .main-header {
     background-color: #ECEBEB;
     h1 {
