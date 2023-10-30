@@ -4,7 +4,7 @@
     <NavBar class="nav" />
     <h2>Special Events Management</h2>
     <div class="content">
-      <div class="col left">
+      <div class="col-left">
         <ReservationTable 
           id="events-res"
           :columns="resCols"
@@ -13,7 +13,7 @@
           @updateItem="updateReservation"
           @deleteItem="deleteReservation"/>
       </div>
-      <div>
+      <div class="col-right">
         <BasicTable
           id="events-table"
           :columns="eventsCols"
@@ -44,112 +44,112 @@ export default {
         {
           title: 'La Scala Opera Trip',
           capacity: 40,
-          contact_name: 'Andy Cohen',
-          contact_email: 'andy1@mail.com',
-          contact_phone: '555-123-4567',
-          event_location: 'Opera House',
+          contactName: 'Andy Cohen',
+          contactEmail: 'andy1@mail.com',
+          contactPhone: '555-123-4567',
+          eventLocation: 'Opera House',
           descript: 'An evening at the La Scala Opera House.',
-          start_time: '2023-10-20 19:30:00',
-          end_time: '2023-10-20 23:00:00',
+          startTime: '2023-10-20 19:30:00',
+          endTime: '2023-10-20 23:00:00',
         },
         {
           title: 'Night Club Hop',
           capacity: 16,
-          contact_name: 'Joe Jackson',
-          contact_email: 'joe1@mail.com',
-          contact_phone: '555-987-6543',
-          event_location: 'Various Nightclubs',
+          contactName: 'Joe Jackson',
+          contactEmail: 'joe1@mail.com',
+          contactPhone: '555-987-6543',
+          eventLocation: 'Various Nightclubs',
           descript: 'A night of dancing and fun at the hottest nightclubs in town.',
-          start_time: '2023-10-25 21:00:00',
-          end_time: '2023-10-26 02:00:00',
+          startTime: '2023-10-25 21:00:00',
+          endTime: '2023-10-26 02:00:00',
         },
         {
           title: 'Wine Tasting Event',
           capacity: 36,
-          contact_name: 'Alice Johnson',
-          contact_email: 'alice1@mail.com',
-          contact_phone: '555-123-7890',
-          event_location: 'Vineyard Estates',
+          contactName: 'Alice Johnson',
+          contactEmail: 'alice1@mail.com',
+          contactPhone: '555-123-7890',
+          eventLocation: 'Vineyard Estates',
           descript: 'Join us for an evening of wine tasting and delicious appetizers.',
-          start_time: '2023-11-05 18:00:00',
-          end_time: '2023-11-05 21:00:00',
+          startTime: '2023-11-05 18:00:00',
+          endTime: '2023-11-05 21:00:00',
         },
         {
           title: 'Charity Gala',
           capacity: 156,
-          contact_name: 'Michael Smith',
-          contact_email: 'michael1@mail.com',
-          contact_phone: '888-555-1234',
-          event_location: 'Grand Ballroom',
+          contactName: 'Michael Smith',
+          contactEmail: 'michael1@mail.com',
+          contactPhone: '888-555-1234',
+          eventLocation: 'Grand Ballroom',
           descript: 'An elegant charity gala to support a good cause with live music and fine dining.',
-          start_time: '2023-12-10 19:00:00',
-          end_time: '2023-12-10 23:00:00',
+          startTime: '2023-12-10 19:00:00',
+          endTime: '2023-12-10 23:00:00',
         },
         {
           title: 'Beach Bonfire Party',
           capacity: 40,
-          contact_name: 'Emily Davis',
-          contact_email: 'emily1@beachmail.com',
-          contact_phone: '555-234-5678',
-          event_location: 'Golden Beach',
+          contactName: 'Emily Davis',
+          contactEmail: 'emily1@beachmail.com',
+          contactPhone: '555-234-5678',
+          eventLocation: 'Golden Beach',
           descript: 'Join us for a night of fun around the bonfire on the beach.',
-          start_time: '2023-11-15 19:00:00',
-          end_time: '2023-11-15 23:00:00',
+          startTime: '2023-11-15 19:00:00',
+          endTime: '2023-11-15 23:00:00',
         },
         {
           title: 'Poolside BBQ Bash',
           capacity: 60,
-          contact_name: 'David Wilson',
-          contact_email: 'david1@resortmail.com',
-          contact_phone: '555-345-6789',
-          event_location: 'Main Pool',
+          contactName: 'David Wilson',
+          contactEmail: 'david1@resortmail.com',
+          contactPhone: '555-345-6789',
+          eventLocation: 'Main Pool',
           descript: 'A BBQ party by the pool with great food and music.',
-          start_time: '2023-11-18 14:00:00',
-          end_time: '2023-11-18 18:00:00',
+          startTime: '2023-11-18 14:00:00',
+          endTime: '2023-11-18 18:00:00',
         },
         {
           title: 'Holiday Carnival',
           capacity: 80,
-          contact_name: 'Sarah Johnson',
-          contact_email: 'sarah1@celebrationmail.com',
-          contact_phone: '555-456-7890',
-          event_location: 'Resort Grounds',
+          contactName: 'Sarah Johnson',
+          contactEmail: 'sarah1@celebrationmail.com',
+          contactPhone: '555-456-7890',
+          eventLocation: 'Resort Grounds',
           descript: 'Get into the holiday spirit with games, rides, and delicious treats.',
-          start_time: '2023-11-23 11:00:00',
-          end_time: '2023-11-23 17:00:00',
+          startTime: '2023-11-23 11:00:00',
+          endTime: '2023-11-23 17:00:00',
         },
         {
           title: 'Festive Luau',
           capacity: 50,
-          contact_name: 'Michael Smith',
-          contact_email: 'michael2@luau.com',
-          contact_phone: '888-555-1234',
-          event_location: 'Luau Pavilion',
+          contactName: 'Michael Smith',
+          contactEmail: 'michael2@luau.com',
+          contactPhone: '888-555-1234',
+          eventLocation: 'Luau Pavilion',
           descript: 'Celebrate the season with a Hawaiian-themed luau featuring traditional dances and cuisine.',
-          start_time: '2023-12-05 18:30:00',
-          end_time: '2023-12-05 22:30:00',
+          startTime: '2023-12-05 18:30:00',
+          endTime: '2023-12-05 22:30:00',
         },
         {
           title: 'Holiday Movie Night',
           capacity: 30,
-          contact_name: 'Alice Johnson',
-          contact_email: 'alice2@holidaycinema.com',
-          contact_phone: '555-987-6543',
-          event_location: 'Resort Cinema',
+          contactName: 'Alice Johnson',
+          contactEmail: 'alice2@holidaycinema.com',
+          contactPhone: '555-987-6543',
+          eventLocation: 'Resort Cinema',
           descript: 'Enjoy classic holiday films under the stars with popcorn and hot cocoa.',
-          start_time: '2023-12-20 20:00:00',
-          end_time: '2023-12-20 23:00:00',
+          startTime: '2023-12-20 20:00:00',
+          endTime: '2023-12-20 23:00:00',
         },
         {
           title: 'Snowy Ski Trip',
           capacity: 25,
-          contact_name: 'John Fritter',
-          contact_email: 'john1@snowyski.com',
-          contact_phone: '555-234-5678',
-          event_location: 'Mountain Lodge',
+          contactName: 'John Fritter',
+          contactEmail: 'john1@snowyski.com',
+          contactPhone: '555-234-5678',
+          eventLocation: 'Mountain Lodge',
           descript: 'Hit the slopes and enjoy a snowy adventure with skiing and cozy cabins.',
-          start_time: '2023-12-28 09:00:00',
-          end_time: '2023-12-29 16:00:00',
+          startTime: '2023-12-28 09:00:00',
+          endTime: '2023-12-29 16:00:00',
         }
       ],
       eventsCols: [
@@ -162,19 +162,19 @@ export default {
           label: 'Capacity',
         },
         {
-          id: 'contact_name',
+          id: 'contactName',
           label: 'Contact Name',
         },
         {
-          id: 'contact_email',
+          id: 'contactEmail',
           label: 'Contact Email',
         },
         {
-          id: 'contact_phone',
+          id: 'contactPhone',
           label: 'Contact Phone',
         },
         {
-          id: 'event_location',
+          id: 'eventLocation',
           label: 'Event Location',
         },
         {
@@ -182,15 +182,19 @@ export default {
           label: 'Description',
         },
         {
-          id: 'start_time',
+          id: 'startTime',
           label: 'Start Time',
         },
         {
-          id: 'end_time',
+          id: 'endTime',
           label: 'End Time',
         }
       ],
       resCols: [
+        {
+          id: 'date',
+          label: 'Date'
+        },
         {
           id: 'event-name',
           label: 'Event'
@@ -203,23 +207,28 @@ export default {
       resRows: [
         {
           'event-name': 'La Scala Opera Trip',
-          client: 'John Doe'
+          client: 'John Doe',
+          date: '2023-10-20 19:30:00'
         },
         {
           'event-name': 'Night Club Hop',
-          client: 'Jane Smith'
+          client: 'Jane Smith',
+          date: '2023-10-26 02:00:00'
         },
         {
           'event-name': 'Wine Tasting Event',
-          client: 'Robert Johnson'
+          client: 'Robert Johnson',
+          date: '2023-11-05 18:00:00'
         },
         {
           'event-name': 'Charity Gala',
-          client: 'Emily Davis'
+          client: 'Emily Davis',
+          date: '2023-12-10 19:00:00'
         },
         {
           'event-name': 'Beach Bonfire Party',
-          client: 'Michael Wilson'
+          client: 'Michael Wilson',
+          date: '2023-11-15 19:00:00'
         }
       ]
     }
@@ -242,6 +251,14 @@ export default {
       console.log(JSON.stringify(res))
     },
   },
+  beforeMount() {
+    this.eventsRows.forEach(obj => {
+      const descriptionLength = obj.descript?.length
+      if (descriptionLength && descriptionLength > 15) {
+        obj.descript = obj.descript.substring(0, 14) + '...'
+      }
+    })
+  },
 }
 </script>
 
@@ -259,23 +276,28 @@ export default {
   h2 {
     margin-top: 3rem;
   }
-  .nav{
-    border-top: 2px solid black;
-    border-bottom: 2px solid black;
-  }
   .content {
     display: flex;
     gap: 4rem;
     justify-content: space-between;
     margin: 0 auto;
     padding: 4rem;
-    .col {
+    .col-left, .col-right {
       align-items: center;
       display: flex;
       flex-direction: column;
     }
-    .basic-table.services {
-      margin-top: 4rem;
+    .basic-table {
+      th.capacity, td.capacity{
+        width:7rem;
+      }
+      th.contactPhone, td.contactPhone, 
+      th.eventLocation, td.eventLocation, 
+      th.contactName, td.contactName,
+      th.descript, td.descript{
+        width: 10rem;
+      }
+      
     }
   }
   
