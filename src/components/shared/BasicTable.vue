@@ -5,17 +5,17 @@
         <th :colspan="columnCount" class="title">{{ title }}</th>
       </tr>
       <tr v-if="showColumns">
-        <th v-for="(col, index) in columns" :key="`th=${index}`">{{ col.label }}</th>
+        <th v-for="(col, index) in columns" :key="`th=${index}`" :class="col.id">{{ col.label }}</th>
         <th class="controls"></th>
       </tr>
       <tr v-for="(row, index) in rowData" :key="`row-${index}`">
-        <td v-for="(col, index) in columns" :key="index">{{ row[col.id] }}</td>
+        <td v-for="(col, index) in columns" :key="index" :class="col.id">{{ row[col.id] }}</td>
         <td class="controls">
           <button @click="deleteItem(index)">X</button>
         </td>
       </tr>
       <tr>
-        <td v-for="(col, index) in columns" :key="index" class="input">
+        <td v-for="(col, index) in columns" :key="index" :class="col.id" class="input">
           <input type="text" v-model="newItemValues[col.id]">
         </td>
         <td class="controls">
