@@ -15,16 +15,20 @@
                         @deleteItem="deleteReservation"
                     />
                 </div>
-                <div class="services">
-                    <div class="title">
-                        <h3>Key Stats</h3>
+                <div>
+                    <div class="services">
+                        <div class="title">
+                            <h3>Key Stats</h3>
+                        </div>
+                        <h4>Today's Dinner</h4>
+                        <div v-for="(item, index) in items" :key="index" class="event-item">
+                            <h5 class="event-title">{{ item.title }}</h5>
+                            <p class="event-list"><span>{{ item.number }}</span></p>
+                        </div>
                     </div>
-                    <h4>Today's Dinner</h4>
-                    <div v-for="(item, index) in items" :key="index" class="event-item">
-                        <h5 class="event-title">{{ item.title }}</h5>
-                        <p class="event-list"><span>{{ item.number }}</span></p>
+                    <div class="col right">
+                        <Button class="btn">Update Menu</Button>
                     </div>
-                    <Button class="btn">Update Menu</Button>
                 </div>
             </div>
         </div>
@@ -158,7 +162,7 @@ export default {
     }
     .content {
         display: flex;
-        gap: 5rem;
+        gap: 4rem;
         justify-content: space-between;
         margin: 0 auto;
         padding: 3rem;
@@ -192,7 +196,7 @@ export default {
             content: ' ';
             display: block;
             border: 1px solid black;
-            width: 50%;
+            width: 100%;
             margin-inline: auto;
             margin-block: 6px;
         }
@@ -200,12 +204,12 @@ export default {
 
     h4 {
         text-align: left;
-        padding-left: 10px;
+        padding-left: 0px;
         font-size: 1.1rem;
     }
     .event-item {
         margin-top: 1rem;
-        padding-left: 10px;
+        padding-left: 0px;
         text-align: left;
     }
 
@@ -227,7 +231,7 @@ export default {
 
     }
     .btn {
-            margin-top: 2rem;
+        margin-top: 1.2rem;
     }
 
     @media (max-width: 1208px) {
