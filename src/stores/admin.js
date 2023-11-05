@@ -24,7 +24,11 @@ export const useAdminStore = defineStore({
     async fetchEvents() {
       this.loadingEvents = true
       try {
-        this.events = await fetch('/api/events/all').then((response) => response.json())
+        await fetch('/api/events/all')
+          .then((response) => response.json())
+          .then(({ data }) => (
+            this.events = data
+          ))
       } catch (error) {
         console.log(error)
       } finally {
