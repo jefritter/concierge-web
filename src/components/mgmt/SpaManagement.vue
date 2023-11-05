@@ -17,7 +17,7 @@
         <BasicTable
           id="spa-services"
           :columns="serviceCols"
-          :rowData="services"
+          :rowData="servicesRowData"
           :showColumns="false"
           title="Spa Services"
           @addItem="addService"
@@ -31,11 +31,18 @@
 import CustomHeader from '@/components/shared/CustomHeader.vue'
 import BasicTable from '@/components/shared/BasicTable.vue'
 import ReservationTable from '@/components/shared/ReservationTable.vue'
+import { mapActions } from 'pinia'
+import { mapState } from 'pinia'
+import { useAdminStore } from '@/stores/admin'
+
 export default {
   components: {
     CustomHeader,
     BasicTable,
     ReservationTable
+  },
+  beforeMount() {
+    this.fetchSpaServices()
   },
   data() {
     return {
@@ -91,7 +98,7 @@ export default {
           label: 'Staff Member'
         }
       ],
-      services: [
+      /* services: [
         {
           service: 'Hot Stone Massage'
         },
@@ -113,7 +120,7 @@ export default {
         {
           service: 'Pedicure'
         }
-      ],
+      ], */
       serviceCols: [
         {
           id: 'service',
@@ -122,7 +129,18 @@ export default {
       ]
     }
   },
+  computed: {
+    ...mapState(useAdminStore, {
+      services: 'getSpaServices'
+    }),
+    servicesRowData() {
+      return this.services.map(svc => {
+        return { 'service': svc.title }
+      })
+    }
+  },
   methods: {
+    ...mapActions(useAdminStore, ['fetchSpaServices']),
     updateReservation(obj) {
       console.log('manager added')
       console.log(JSON.stringify(obj))
