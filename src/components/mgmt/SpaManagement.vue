@@ -157,10 +157,6 @@ export default {
   flex-direction: column;
   height: 100vh;
 
-  .navbar {
-    border-top: 1px solid black;
-    border-bottom: 1px solid black;
-  }
   .main-header {
     background-color: #ECEBEB;
     h1 {
