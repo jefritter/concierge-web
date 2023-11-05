@@ -33,7 +33,7 @@
   import ReservationForm from '@/components/shared/ReservationForm.vue'
   import { mapActions } from 'pinia'
   import { mapState } from 'pinia'
-  import { useAdminStore } from '@/stores/admin'
+  import { useServicesStore } from '@/stores/services'
 
   export default {
     components: {
@@ -70,7 +70,7 @@
       }
     },
     computed: {
-      ...mapState(useAdminStore, {
+      ...mapState(useServicesStore, {
         events: 'getEvents',
         loadingEvents: 'loadingEvents'
       }),
@@ -97,7 +97,7 @@
       }
     },
     methods: {
-      ...mapActions(useAdminStore, ['fetchEvents']),
+      ...mapActions(useServicesStore, ['fetchEvents']),
       parseDescription(desc) {
         let result = ''
         const descriptionLength = desc?.length

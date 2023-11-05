@@ -33,7 +33,7 @@ import BasicTable from '@/components/shared/BasicTable.vue'
 import ReservationTable from '@/components/shared/ReservationTable.vue'
 import { mapActions } from 'pinia'
 import { mapState } from 'pinia'
-import { useAdminStore } from '@/stores/admin'
+import { useServicesStore } from '@/stores/services'
 
 export default {
   components: {
@@ -126,7 +126,7 @@ export default {
     }
   },
   computed: {
-    ...mapState(useAdminStore, {
+    ...mapState(useServicesStore, {
       events: 'getEvents',
       loadingEvents: 'loadingEvents'
     }),
@@ -147,7 +147,7 @@ export default {
     }
   },
   methods: {
-    ...mapActions(useAdminStore, ['fetchEvents']),
+    ...mapActions(useServicesStore, ['fetchEvents']),
     addEvent(obj) {
       console.log('event added');
       console.log(JSON.stringify(obj));
