@@ -25,6 +25,7 @@
     justify-content: center;
     background-color:white;
     width: 100vw;
+    text-align: center;
     border-top: 1px solid black;
     border-bottom: 1px solid black;
   }
