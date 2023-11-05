@@ -25,5 +25,7 @@
     justify-content: center;
     background-color:white;
     width: 100vw;
+    border-top: 1px solid black;
+    border-bottom: 1px solid black;
   }
 </style>

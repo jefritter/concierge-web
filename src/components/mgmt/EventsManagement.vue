@@ -1,7 +1,7 @@
 <template>
   <div class="events-management">
     <CustomHeader subtitle="Admin" />
-    <NavBar class="nav" />
+    <NavBar class="nav" :additionalLink="eventsHomeLink"/>
     <h2>Special Events Management</h2>
     <div class="content">
       <div class="col-left">
@@ -40,6 +40,10 @@ export default {
   },
   data() {
     return {
+      eventsHomeLink: {
+        to: '/events',
+        text: 'Events Home'
+      },
       eventsRows: [
         {
           title: 'La Scala Opera Trip',
