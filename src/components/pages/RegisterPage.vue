@@ -8,39 +8,100 @@
                     Register
                 </div>
                 <div class="login-item">
-                    <form @submit="onSubmit" action="" method="post" class="form form-login">
+                    <form 
+                        action="" 
+                        method="post" 
+                        class="form form-login"
+                        novalidate="true"
+                        v-on:submit.prevent="validate"
+                        autocomplete="off"
+                        id="Form"
+                    >
+                        <!-- Invalid email -->
+                        <span class="invalid-feedback" v-if="validation.invalid.email">
+                            {{ validation.invalid.email }}
+                        </span>
+                        <!-- Valid email --->
+                        <span class="valid-feedback" v-if="validation.valid.email">
+                            {{ validation.valid.email }}
+                        </span>
                         <div class="form-field" id="formvalidation">
                             <label class="user" for="login-email"><span class="hidden">Email address</span></label>
                             <input 
-                                autocomplete="off"
-                                type="email"
+                                type="text" 
+                                name="email"
+                                placeholder="Email" 
+                                id="email" 
+                                class="form-input" 
+                                autocomplete="false"
+                                v-bind:class="{
+                                    'is-valid' : validation.valid.email,
+                                    'is-invalid' : validation.invalid.email
+                                }"
+                                v-on:focus="validation('email')"
                                 v-model="email"
-                                placeholder="Email address" 
                                 required
-                            >
-                            <p style="{color: red;}"> {{ errorMessage }}</p>
+                            />
                         </div>
                         
+                        <!-- Invalid email confirmation-->
+                        <span class="invalid-feedback" v-if="errorMessageEM">
+                            {{ errorMessageEM }}
+                        </span>
                         <div class="form-field">
                             <label class="user-confirm" for="login-email"><span class="hidden">Confirm Email</span></label>
-                            <input id="login-email" type="text" class="form-input" placeholder="Confirm Email address" required>
+                            <input 
+                                type="text" 
+                                name="email"
+                                placeholder="Confirm Email address" 
+                                class="form-input" 
+                                v-model="emailVerify"
+                                @input="validateFormEM"
+                                required
+                            />
                         </div>
 
+                        <!-- Valid Password -->
+                        <span class="invalid-feedback" v-if="validation.invalid.password">
+                            {{ validation.invalid.password }}
+                        </span>
+                        <!-- Invalid password -->
+                        <span class="valid-feedback" v-if="validation.valid.password">
+                            {{ validation.valid.password }}
+                        </span>
                         <div class="form-field">
                             <label class="lock" for="login-password"><span class="hidden">Password</span></label>
                             <input 
-                                autocomplete="off" 
-                                type="password" 
-                                v-model="password" 
-                                v-bind:class="{'form-control':true, 'is-invalid' : !validPassword(password) && passwordBlured}" 
-                                v-on:blur="passwordBlured = true"
+                                id="password" 
+                                type="password"
+                                name="password"
+                                class="form-input" 
                                 placeholder="Password" 
-                                required>
+                                v-bind:class="{
+                                    'is-valid' : validation.valid.password,
+                                    'is-invalid' : validation.invalid.password
+                                }"
+                                v-on:focus="validation('password')"
+                                v-model="password"
+                                required
+                            />
                         </div>
 
+                        <!--- Invalid password confirmation -->
+                        <span class="invalid-feedback" v-if="errorMessagePW">
+                            {{ errorMessagePW }}
+                        </span>
                         <div class="form-field">
                             <label class="lock-confirm" for="login-password"><span class="hidden">Confirm Password</span></label>
-                            <input id="login-password" type="password" class="form-input" placeholder="Confirm Password" required>
+                            <input 
+                                id="login-password" 
+                                type="password" 
+                                class="form-input" 
+                                placeholder="Confirm Password" 
+                                v-model="passwordVerify"
+                                @input="validateFormPW"
+                                required
+                            />
                         </div>
                             
                         <div class="form-field">
@@ -69,33 +130,72 @@ export default {
     },
     data() {
         return {
-            email:'',
-            password:'',
-            confirmPassword:'',
-            errorMessage: ''
+            email: '',
+            emailBlured: false,
+            emailVerify: '',
+            password: '',
+            passwordVerify: '',
+            passwordBlured: false,
+            valid: false,
+            submitted: false,
+            errorMessageEM: '',
+            errorMessagePW: '',
+
+            validation: {
+                invalid: {},
+                valid: {}
+            }
         };
     },
 
     methods: {
-        onSubmit(event) {
-            event.preventDefault();
-            console.log(event);
+        validate: function () {
+        // Email validation
+        if (!this.email) {
+            this.validation.invalid.email = 'Please enter your email address.';
+            return false;
+        } else {
+            this.validation.valid.email = '';
+        }
+
+        // Password validation
+        if (!this.password) {
+            this.validation.invalid.password = 'Please enter password.';
+            return false;
+        } else if (this.password.length < 8) {
+            this.validation.invalid.password = 
+                'Password should have a minimum of 8 characters.';
+        } else if (this.password.match(/[^a-z]/i)) {
+            this.validation.invalid.password = 
+                'Password should contain only latin letters (a-z).';
+        } else {
+            this.validation.valid.password = '';
+        }
+
+        this.$forceUpdate();
         },
-        validateEmail(email) {
-            if (/^\w+([.-]?\w+)*@\w+([.-]?\w+)*(\.\w{2,3})+$/.test(email)) {
-                this.errorMessage = ''
-            } else {
-                this.errorMessage = 'Invalid Email'
+
+        validateFormEM() {
+            //
+            if (this.email !== this.emailVerify) {
+                this.errorMessageEM = 'Email do not match';
+                return false;
             }
+            this.errorMessageEM = '';
+            return true;
         },
-        watch: {
-            email(value) {
-                this.email = value;
-                this.validateEmail(value);
+
+        validateFormPW() {
+            // Password confirmation
+            if (this.password !== this.passwordVerify) {
+                this.errorMessagePW = 'Passwords do not match';
+                return false;
             }
-        },
-    }
-}
+            this.errorMessagePW = '';
+            return true;
+        }
+    },
+};
 </script>
 
 <style lang="scss">
