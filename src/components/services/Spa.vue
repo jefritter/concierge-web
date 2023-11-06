@@ -36,6 +36,9 @@
 import CustomHeader from '../shared/CustomHeader.vue';
 import NavBar from '@/components/shared/NavBar.vue';
 import ReservationForm from '@/components/shared/ReservationForm.vue'
+import { mapActions } from 'pinia'
+import { mapState } from 'pinia'
+import { useServicesStore } from '@/stores/services'
 
 export default {
   components: {
@@ -45,36 +48,6 @@ export default {
   },
   data() {
     return {
-      services: [
-        { 
-          id: 1,
-          title: 'Hot Stone Massage'
-        },
-        { 
-          id: 2,
-          title: 'Sport Massage'
-        },
-        { 
-          id: 3,
-          title: 'Swedish Massage'
-        },
-        { 
-          id: 4,
-          title: 'Reflexology'
-        },
-        { 
-          id: 5,
-          title: 'Facial'
-        },
-        { 
-          id: 6,
-          title: 'Manicure'
-        },
-        { 
-          id: 7,
-          title: 'Pedicure'
-        }
-      ],
       fields: [
         {
           id: 'date',
@@ -100,20 +73,30 @@ export default {
       ]
     };
   },
+  computed: {
+    ...mapState(useServicesStore, {
+      services: 'getSpaServices',
+      loadingSpaServices: 'loadingSpaServices'
+    })
+  },
   beforeMount() {
+    if (!this.services?.length && !this.loadingSpaServices) {
+      this.fetchSpaServices()
+    }
     this.fields[3].options = this.services
   },
   methods: {
-      submitReservation(values) {
-        const isValid = this.validateInputs(values)
-        if (isValid) {
-          console.log('submitting')
-        }
-      },
-      validateInputs(values) {
-        return !!values;
+    ...mapActions(useServicesStore, ['fetchSpaServices']),
+    submitReservation(values) {
+      const isValid = this.validateInputs(values)
+      if (isValid) {
+        console.log('submitting')
       }
+    },
+    validateInputs(values) {
+      return !!values;
     }
+  }
 }
 </script>
   
@@ -121,7 +104,14 @@ export default {
 .spa-home {
   background-size: cover;
   background-image: url("/src/assets/massage-therapy.jpg");
-  min-height: 100vh;  
+  min-height: 100vh;
+  nav {
+        margin: 0;
+        padding: 12px;
+        border-bottom: 1px solid black;
+        background-color: white;
+        text-align: center;
+    }
 
   .main-container {
     display: flex;

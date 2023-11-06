@@ -14,7 +14,7 @@
       <div class="right-column">
         <div class="events-box">
           <h2>Upcoming Events</h2>
-          <div v-for="(event, index) in events" :key="index" class="event-item">
+          <div v-for="(event, index) in upcomingEvents" :key="index" class="event-item">
             <h4 class="event-title">{{ event.title }}</h4>
             <p><strong>Reservations:</strong> <span>{{ event.reservations }}</span></p>
             <p><strong>Openings:</strong> <span>{{ event.openings }}</span></p>
@@ -28,9 +28,12 @@
 </template>
 
 <script>
-  import CustomHeader from '@/components/shared/CustomHeader.vue';
-  import NavBar from '@/components/shared/NavBar.vue';
+  import CustomHeader from '@/components/shared/CustomHeader.vue'
+  import NavBar from '@/components/shared/NavBar.vue'
   import ReservationForm from '@/components/shared/ReservationForm.vue'
+  import { mapActions } from 'pinia'
+  import { mapState } from 'pinia'
+  import { useServicesStore } from '@/stores/services'
 
   export default {
     components: {
@@ -38,26 +41,8 @@
       NavBar,
       ReservationForm
     },
-    data() {
+   data() {
       return {
-        events: [
-          {
-            id: 1,
-            title: 'La Scala Opera Trip',
-            reservations: 26,
-            openings: 14,
-            transportation: 'ABC Bus',
-            host: 'Andy Cohen'
-          },
-          {
-            id: 2,
-            title: 'Night Club Hop',
-            reservations: 10,
-            openings: 6,
-            transportation: 'XYZ Limo',
-            host: 'Joe Jackson, Patty Smith'
-          }
-        ],
         fields: [
           {
             id: 'event',
@@ -80,8 +65,15 @@
     },
     beforeMount() {
       this.fields[0].options = this.eventOptions
+      if (!this.events?.length && !this.loadingEvents) {
+        this.fetchEvents()
+      }
     },
     computed: {
+      ...mapState(useServicesStore, {
+        events: 'getEvents',
+        loadingEvents: 'loadingEvents'
+      }),
       eventOptions() {
         return this.events.map((event) => {
           return {
@@ -89,9 +81,31 @@
             title: event.title
           }
         })
+      },
+      upcomingEvents() {
+        const upcoming = this.events.slice(0, 3)
+        return upcoming.map(e => {
+          return {
+            id: e.id,
+            title: e.title,
+            reservations: 0,
+            openings: e.capacity,
+            transportation: 'TBD',
+            host: e.contact_name
+          }
+        })
       }
     },
     methods: {
+      ...mapActions(useServicesStore, ['fetchEvents']),
+      parseDescription(desc) {
+        let result = ''
+        const descriptionLength = desc?.length
+        if (descriptionLength && descriptionLength > 15) {
+          result = desc.substring(0, 14) + '...'
+        }
+        return result
+      },
       submitReservation(values) {
         const isValid = this.validateInputs(values)
         if (isValid) {
@@ -111,7 +125,14 @@
   .events-home {
     display: flex;
     flex-direction: column;
-    min-height: 100vh; 
+    min-height: 100vh;
+    nav {
+        margin: 0;
+        padding: 12px;
+        border-bottom: 1px solid black;
+        background-color: white;
+        text-align: center;
+    }
     main {
       background-image: url('@/assets/special-event-table.webp');
       background-size: cover;

@@ -31,6 +31,10 @@ import CustomHeader from '@/components/shared/CustomHeader.vue'
 import NavBar from '@/components/shared/NavBar.vue'
 import BasicTable from '@/components/shared/BasicTable.vue'
 import ReservationTable from '@/components/shared/ReservationTable.vue'
+import { mapActions } from 'pinia'
+import { mapState } from 'pinia'
+import { useServicesStore } from '@/stores/services'
+
 export default {
   components: {
     CustomHeader,
@@ -40,122 +44,6 @@ export default {
   },
   data() {
     return {
-      eventsHomeLink: {
-        to: '/events',
-        text: 'Events Home'
-      },
-      eventsRows: [
-        {
-          title: 'La Scala Opera Trip',
-          capacity: 40,
-          contactName: 'Andy Cohen',
-          contactEmail: 'andy1@mail.com',
-          contactPhone: '555-123-4567',
-          eventLocation: 'Opera House',
-          descript: 'An evening at the La Scala Opera House.',
-          startTime: '2023-10-20 19:30:00',
-          endTime: '2023-10-20 23:00:00',
-        },
-        {
-          title: 'Night Club Hop',
-          capacity: 16,
-          contactName: 'Joe Jackson',
-          contactEmail: 'joe1@mail.com',
-          contactPhone: '555-987-6543',
-          eventLocation: 'Various Nightclubs',
-          descript: 'A night of dancing and fun at the hottest nightclubs in town.',
-          startTime: '2023-10-25 21:00:00',
-          endTime: '2023-10-26 02:00:00',
-        },
-        {
-          title: 'Wine Tasting Event',
-          capacity: 36,
-          contactName: 'Alice Johnson',
-          contactEmail: 'alice1@mail.com',
-          contactPhone: '555-123-7890',
-          eventLocation: 'Vineyard Estates',
-          descript: 'Join us for an evening of wine tasting and delicious appetizers.',
-          startTime: '2023-11-05 18:00:00',
-          endTime: '2023-11-05 21:00:00',
-        },
-        {
-          title: 'Charity Gala',
-          capacity: 156,
-          contactName: 'Michael Smith',
-          contactEmail: 'michael1@mail.com',
-          contactPhone: '888-555-1234',
-          eventLocation: 'Grand Ballroom',
-          descript: 'An elegant charity gala to support a good cause with live music and fine dining.',
-          startTime: '2023-12-10 19:00:00',
-          endTime: '2023-12-10 23:00:00',
-        },
-        {
-          title: 'Beach Bonfire Party',
-          capacity: 40,
-          contactName: 'Emily Davis',
-          contactEmail: 'emily1@beachmail.com',
-          contactPhone: '555-234-5678',
-          eventLocation: 'Golden Beach',
-          descript: 'Join us for a night of fun around the bonfire on the beach.',
-          startTime: '2023-11-15 19:00:00',
-          endTime: '2023-11-15 23:00:00',
-        },
-        {
-          title: 'Poolside BBQ Bash',
-          capacity: 60,
-          contactName: 'David Wilson',
-          contactEmail: 'david1@resortmail.com',
-          contactPhone: '555-345-6789',
-          eventLocation: 'Main Pool',
-          descript: 'A BBQ party by the pool with great food and music.',
-          startTime: '2023-11-18 14:00:00',
-          endTime: '2023-11-18 18:00:00',
-        },
-        {
-          title: 'Holiday Carnival',
-          capacity: 80,
-          contactName: 'Sarah Johnson',
-          contactEmail: 'sarah1@celebrationmail.com',
-          contactPhone: '555-456-7890',
-          eventLocation: 'Resort Grounds',
-          descript: 'Get into the holiday spirit with games, rides, and delicious treats.',
-          startTime: '2023-11-23 11:00:00',
-          endTime: '2023-11-23 17:00:00',
-        },
-        {
-          title: 'Festive Luau',
-          capacity: 50,
-          contactName: 'Michael Smith',
-          contactEmail: 'michael2@luau.com',
-          contactPhone: '888-555-1234',
-          eventLocation: 'Luau Pavilion',
-          descript: 'Celebrate the season with a Hawaiian-themed luau featuring traditional dances and cuisine.',
-          startTime: '2023-12-05 18:30:00',
-          endTime: '2023-12-05 22:30:00',
-        },
-        {
-          title: 'Holiday Movie Night',
-          capacity: 30,
-          contactName: 'Alice Johnson',
-          contactEmail: 'alice2@holidaycinema.com',
-          contactPhone: '555-987-6543',
-          eventLocation: 'Resort Cinema',
-          descript: 'Enjoy classic holiday films under the stars with popcorn and hot cocoa.',
-          startTime: '2023-12-20 20:00:00',
-          endTime: '2023-12-20 23:00:00',
-        },
-        {
-          title: 'Snowy Ski Trip',
-          capacity: 25,
-          contactName: 'John Fritter',
-          contactEmail: 'john1@snowyski.com',
-          contactPhone: '555-234-5678',
-          eventLocation: 'Mountain Lodge',
-          descript: 'Hit the slopes and enjoy a snowy adventure with skiing and cozy cabins.',
-          startTime: '2023-12-28 09:00:00',
-          endTime: '2023-12-29 16:00:00',
-        }
-      ],
       eventsCols: [
         {
           id: 'title',
@@ -237,7 +125,29 @@ export default {
       ]
     }
   },
+  computed: {
+    ...mapState(useServicesStore, {
+      events: 'getEvents',
+      loadingEvents: 'loadingEvents'
+    }),
+    eventsRows() {
+      return this.events.map(event => {
+        return {
+          title: event.title,
+          capacity: event.capacity,
+          contactName: event.contact_name,
+          contactEmail: event.contact_email,
+          contactPhone: event.contact_phone,
+          eventLocation: event.event_location,
+          descript: this.parseDescription(event.descript),
+          startTime: event.start_time,
+          endTime: event.end_time
+        }
+      })
+    }
+  },
   methods: {
+    ...mapActions(useServicesStore, ['fetchEvents']),
     addEvent(obj) {
       console.log('event added');
       console.log(JSON.stringify(obj));
@@ -254,14 +164,19 @@ export default {
       console.log('reservation deleted')
       console.log(JSON.stringify(res))
     },
+    parseDescription(desc) {
+      let result = ''
+      const descriptionLength = desc?.length
+      if (descriptionLength && descriptionLength > 15) {
+        result = desc.substring(0, 14) + '...'
+      }
+      return result
+    }
   },
   beforeMount() {
-    this.eventsRows.forEach(obj => {
-      const descriptionLength = obj.descript?.length
-      if (descriptionLength && descriptionLength > 15) {
-        obj.descript = obj.descript.substring(0, 14) + '...'
-      }
-    })
+    if (!this.loadingEvents) {
+      this.fetchEvents()
+    }
   },
 }
 </script>
