@@ -1,7 +1,7 @@
 <template>
   <div class="events-management">
     <CustomHeader subtitle="Admin" />
-    <NavBar class="nav" />
+    <NavBar class="nav" :additionalLink="eventsHomeLink"/>
     <h2>Special Events Management</h2>
     <div class="content">
       <div class="col-left">

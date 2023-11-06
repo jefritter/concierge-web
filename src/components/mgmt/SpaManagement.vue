@@ -2,6 +2,7 @@
   <div class="spa-management">
     <CustomHeader
       subtitle="Admin"/>
+    <NavBar class="navbar" :additionalLink="spaHomeLink" />
     <h2>Spa Management</h2>
     <div class="content">
       <div class="col left">
@@ -31,6 +32,7 @@
 import CustomHeader from '@/components/shared/CustomHeader.vue'
 import BasicTable from '@/components/shared/BasicTable.vue'
 import ReservationTable from '@/components/shared/ReservationTable.vue'
+import NavBar from '@/components/shared/NavBar.vue';
 import { mapActions } from 'pinia'
 import { mapState } from 'pinia'
 import { useServicesStore } from '@/stores/services'
@@ -39,13 +41,18 @@ export default {
   components: {
     CustomHeader,
     BasicTable,
-    ReservationTable
+    ReservationTable,
+    NavBar
   },
   beforeMount() {
     this.fetchSpaServices()
   },
   data() {
     return {
+      spaHomeLink: {
+        to: '/spa',
+        text: 'Spa Home'
+      },
       reservations: [
         {
           date: '1/2/24',
@@ -166,6 +173,7 @@ export default {
   display: flex;
   flex-direction: column;
   height: 100vh;
+
   .main-header {
     background-color: #ECEBEB;
     h1 {
