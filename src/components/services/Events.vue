@@ -33,7 +33,7 @@
   import ReservationForm from '@/components/shared/ReservationForm.vue'
   import { mapActions } from 'pinia'
   import { mapState } from 'pinia'
-  import { useServicesStore } from '@/stores/services'
+  import { useEventsStore } from '@/stores/events'
 
   export default {
     components: {
@@ -70,7 +70,7 @@
       }
     },
     computed: {
-      ...mapState(useServicesStore, {
+      ...mapState(useEventsStore, {
         events: 'getEvents',
         loadingEvents: 'loadingEvents'
       }),
@@ -97,7 +97,7 @@
       }
     },
     methods: {
-      ...mapActions(useServicesStore, ['fetchEvents']),
+      ...mapActions(useEventsStore, ['fetchEvents']),
       parseDescription(desc) {
         let result = ''
         const descriptionLength = desc?.length
@@ -175,7 +175,7 @@
         flex-basis: 50%;
         display: flex;
         flex-direction: column;
-        .contact-box{
+        .contact-box {
           background-color:white;
           padding: 10px;
           border: 1px solid black;

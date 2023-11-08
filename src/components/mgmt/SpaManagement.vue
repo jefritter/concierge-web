@@ -35,7 +35,7 @@ import ReservationTable from '@/components/shared/ReservationTable.vue'
 import NavBar from '@/components/shared/NavBar.vue';
 import { mapActions } from 'pinia'
 import { mapState } from 'pinia'
-import { useServicesStore } from '@/stores/services'
+import { useSpaStore } from '@/stores/spa'
 
 export default {
   components: {
@@ -105,29 +105,6 @@ export default {
           label: 'Staff Member'
         }
       ],
-      /* services: [
-        {
-          service: 'Hot Stone Massage'
-        },
-        {
-          service: 'Sport Massage'
-        },
-        {
-          service: 'Swedish Massage'
-        },
-        {
-          service: 'Reflexology'
-        },
-        {
-          service: 'Facial'
-        },
-        {
-          service: 'Manicure'
-        },
-        {
-          service: 'Pedicure'
-        }
-      ], */
       serviceCols: [
         {
           id: 'service',
@@ -137,7 +114,7 @@ export default {
     }
   },
   computed: {
-    ...mapState(useServicesStore, {
+    ...mapState(useSpaStore, {
       services: 'getSpaServices'
     }),
     servicesRowData() {
@@ -147,7 +124,7 @@ export default {
     }
   },
   methods: {
-    ...mapActions(useServicesStore, ['fetchSpaServices']),
+    ...mapActions(useSpaStore, ['fetchSpaServices']),
     updateReservation(obj) {
       console.log('manager added')
       console.log(JSON.stringify(obj))
