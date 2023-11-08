@@ -56,7 +56,7 @@
       }
     },
     beforeMount() {
-      this.newItemValues = this.valuesObject;
+      this.newItemValues = { ...this.valuesObject };
     },
     computed: {
       columnCount() {
@@ -77,7 +77,7 @@
       },
       addItem() {
         this.$emit('addItem', this.newItemValues)
-        this.newItemValues = this.valuesObject;
+        this.newItemValues = { ...this.valuesObject };
       }
     }
   }

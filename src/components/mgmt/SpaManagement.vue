@@ -109,6 +109,10 @@ export default {
         {
           id: 'service',
           label: 'Service'
+        },
+        {
+          id: 'descript',
+          label: 'Description'
         }
       ]
     }
@@ -119,12 +123,16 @@ export default {
     }),
     servicesRowData() {
       return this.services.map(svc => {
-        return { 'service': svc.title }
+        return { 
+          'id': svc.id,
+          'service': svc.title,
+          'descript': svc.descript
+        }
       })
     }
   },
   methods: {
-    ...mapActions(useSpaStore, ['fetchSpaServices']),
+    ...mapActions(useSpaStore, ['addSpaService', 'deleteSpaService', 'fetchSpaServices']),
     updateReservation(obj) {
       console.log('manager added')
       console.log(JSON.stringify(obj))
@@ -133,13 +141,15 @@ export default {
       console.log('manager deleted')
       console.log(JSON.stringify(res))
     },
-    addService(obj) {
-      console.log('service added')
-      console.log(JSON.stringify(obj))
+    addService(inputs) {
+      const newService = {
+        title: inputs.service,
+        descript: inputs.descript
+      }
+      this.addSpaService(newService)
     },
     deleteService(svc) {
-      console.log('service deleted')
-      console.log(JSON.stringify(svc))
+      this.deleteSpaService(svc)
     }
   }
 }
