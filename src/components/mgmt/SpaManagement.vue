@@ -19,7 +19,6 @@
           id="spa-services"
           :columns="serviceCols"
           :rowData="servicesRowData"
-          :showColumns="false"
           title="Spa Services"
           @addItem="addService"
           @deleteItem="deleteService"/>

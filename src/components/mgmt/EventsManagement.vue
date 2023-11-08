@@ -19,8 +19,8 @@
           :columns="eventsCols"
           :rowData="eventsRows"
           title="Events"
-          @addItem="addEvent"
-          @deleteItem="deleteEvent"/>
+          @addItem="handleAddEvent"
+          @deleteItem="handleDeleteEvent"/>
       </div>
     </div>
   </div>
@@ -133,6 +133,7 @@ export default {
     eventsRows() {
       return this.events.map(event => {
         return {
+          id: event.id,
           title: event.title,
           capacity: event.capacity,
           contactName: event.contact_name,
@@ -147,14 +148,15 @@ export default {
     }
   },
   methods: {
-    ...mapActions(useEventsStore, ['fetchEvents']),
-    addEvent(obj) {
-      console.log('event added');
-      console.log(JSON.stringify(obj));
+    ...mapActions(useEventsStore, ['addEvent', 'deleteEvent', 'fetchEvents']),
+    handleAddEvent(inputs) {
+      this.addEvent(inputs)
     },
-    deleteEvent(event) {
-      console.log('event deleted');
-      console.log(JSON.stringify(event));
+    handleDeleteEvent(event) {
+      this.deleteEvent({
+        id: event.id,
+        title: event.title
+      })
     },
     updateReservation(obj) {
       console.log('reservation added')
