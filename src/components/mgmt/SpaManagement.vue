@@ -19,7 +19,6 @@
           id="spa-services"
           :columns="serviceCols"
           :rowData="servicesRowData"
-          :showColumns="false"
           title="Spa Services"
           @addItem="addService"
           @deleteItem="deleteService"/>
@@ -35,7 +34,7 @@ import ReservationTable from '@/components/shared/ReservationTable.vue'
 import NavBar from '@/components/shared/NavBar.vue';
 import { mapActions } from 'pinia'
 import { mapState } from 'pinia'
-import { useServicesStore } from '@/stores/services'
+import { useSpaStore } from '@/stores/spa'
 
 export default {
   components: {
@@ -105,49 +104,34 @@ export default {
           label: 'Staff Member'
         }
       ],
-      /* services: [
-        {
-          service: 'Hot Stone Massage'
-        },
-        {
-          service: 'Sport Massage'
-        },
-        {
-          service: 'Swedish Massage'
-        },
-        {
-          service: 'Reflexology'
-        },
-        {
-          service: 'Facial'
-        },
-        {
-          service: 'Manicure'
-        },
-        {
-          service: 'Pedicure'
-        }
-      ], */
       serviceCols: [
         {
           id: 'service',
           label: 'Service'
+        },
+        {
+          id: 'descript',
+          label: 'Description'
         }
       ]
     }
   },
   computed: {
-    ...mapState(useServicesStore, {
+    ...mapState(useSpaStore, {
       services: 'getSpaServices'
     }),
     servicesRowData() {
       return this.services.map(svc => {
-        return { 'service': svc.title }
+        return { 
+          'id': svc.id,
+          'service': svc.title,
+          'descript': svc.descript
+        }
       })
     }
   },
   methods: {
-    ...mapActions(useServicesStore, ['fetchSpaServices']),
+    ...mapActions(useSpaStore, ['addSpaService', 'deleteSpaService', 'fetchSpaServices']),
     updateReservation(obj) {
       console.log('manager added')
       console.log(JSON.stringify(obj))
@@ -156,13 +140,15 @@ export default {
       console.log('manager deleted')
       console.log(JSON.stringify(res))
     },
-    addService(obj) {
-      console.log('service added')
-      console.log(JSON.stringify(obj))
+    addService(inputs) {
+      const newService = {
+        title: inputs.service,
+        descript: inputs.descript
+      }
+      this.addSpaService(newService)
     },
     deleteService(svc) {
-      console.log('service deleted')
-      console.log(JSON.stringify(svc))
+      this.deleteSpaService(svc)
     }
   }
 }

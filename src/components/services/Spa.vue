@@ -38,7 +38,7 @@ import NavBar from '@/components/shared/NavBar.vue';
 import ReservationForm from '@/components/shared/ReservationForm.vue'
 import { mapActions } from 'pinia'
 import { mapState } from 'pinia'
-import { useServicesStore } from '@/stores/services'
+import { useSpaStore } from '@/stores/spa'
 
 export default {
   components: {
@@ -74,7 +74,7 @@ export default {
     };
   },
   computed: {
-    ...mapState(useServicesStore, {
+    ...mapState(useSpaStore, {
       services: 'getSpaServices',
       loadingSpaServices: 'loadingSpaServices'
     })
@@ -86,7 +86,7 @@ export default {
     this.fields[3].options = this.services
   },
   methods: {
-    ...mapActions(useServicesStore, ['fetchSpaServices']),
+    ...mapActions(useSpaStore, ['fetchSpaServices']),
     submitReservation(values) {
       const isValid = this.validateInputs(values)
       if (isValid) {

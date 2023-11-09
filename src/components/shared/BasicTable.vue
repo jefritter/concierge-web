@@ -5,7 +5,7 @@
         <th :colspan="columnCount" class="title">{{ title }}</th>
       </tr>
       <tr v-if="showColumns">
-        <th v-for="(col, index) in columns" :key="`th=${index}`" :class="col.id">{{ col.label }}</th>
+        <th v-for="(col, index) in columns" :key="`th=${index}`" :class="col.id" class="">{{ col.label }}</th>
         <th class="controls"></th>
       </tr>
       <tr v-for="(row, index) in rowData" :key="`row-${index}`">
@@ -56,7 +56,7 @@
       }
     },
     beforeMount() {
-      this.newItemValues = this.valuesObject;
+      this.newItemValues = { ...this.valuesObject };
     },
     computed: {
       columnCount() {
@@ -77,7 +77,7 @@
       },
       addItem() {
         this.$emit('addItem', this.newItemValues)
-        this.newItemValues = this.valuesObject;
+        this.newItemValues = { ...this.valuesObject };
       }
     }
   }
@@ -87,7 +87,7 @@
   .basic-table {
     table {
       border-collapse: collapse;
-      .title {
+      th {
         font-weight: 600;
       }
       th, td {
