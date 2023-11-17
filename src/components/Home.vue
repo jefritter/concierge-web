@@ -56,8 +56,7 @@
             time: '1:00pm',
             groupCount: 1
           }
-        ],
-        users: []
+        ]
       }
     },
     beforeMount() {
@@ -66,9 +65,6 @@
       this.reservations[1].date = this.today.add(1, 'day')
     },
     computed: {
-      hasUserData() {
-        return this.users.length > 0
-      },
       reservationsToday() {
         return this.reservations.filter((res) => { 
           return res.date.isSame(this.today, 'day')
