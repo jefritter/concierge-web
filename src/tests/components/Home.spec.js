@@ -36,7 +36,13 @@ describe('Home', () => {
     mockReservationToday.date = date
     mockReservationTomorrow.date = date.add(1, 'day')
 
-    wrapper = mount(Home)
+    wrapper = mount(Home, {
+      global: {
+        stubs: {
+          'router-link': { template: '<div/>' }
+        }
+      }
+    })
   })
 
   afterEach(() => {
