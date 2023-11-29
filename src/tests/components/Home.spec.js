@@ -1,5 +1,5 @@
 import { beforeEach, afterEach, describe, it, expect, vi } from 'vitest'
-import { mount } from '@vue/test-utils'
+import { shallowMount } from '@vue/test-utils'
 import Home from '@/components/Home.vue'
 import dayjs from  'dayjs'
 
@@ -36,13 +36,7 @@ describe('Home', () => {
     mockReservationToday.date = date
     mockReservationTomorrow.date = date.add(1, 'day')
 
-    wrapper = mount(Home, {
-      global: {
-        stubs: {
-          'router-link': { template: '<div/>' }
-        }
-      }
-    })
+    wrapper = shallowMount(Home)
   })
 
   afterEach(() => {
