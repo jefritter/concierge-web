@@ -31,8 +31,7 @@ import CustomHeader from '@/components/shared/CustomHeader.vue'
 import NavBar from '@/components/shared/NavBar.vue'
 import BasicTable from '@/components/shared/BasicTable.vue'
 import ReservationTable from '@/components/shared/ReservationTable.vue'
-import { mapActions } from 'pinia'
-import { mapState } from 'pinia'
+import { mapActions, mapState } from 'pinia'
 import { useEventsStore } from '@/stores/events'
 
 export default {

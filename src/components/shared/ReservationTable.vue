@@ -100,8 +100,8 @@
       submitUpdate() {
         console.log('update submitted')
         console.log(this.newItemValues)
-        this.$emit('updateItem', this.newItemValues)
         this.showUpdateModal = false
+        this.$emit('updateItem', this.newItemValues)
       }
     }
   }
