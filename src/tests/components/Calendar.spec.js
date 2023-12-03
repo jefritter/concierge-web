@@ -111,7 +111,6 @@ describe('Calendar', () => {
 
     expectedOptions.plugins.forEach(expectedPlugin => {
       const pluginExists = actualPlugins.some(plugin => {
-        console.log('Checking:', plugin.name, 'against', expectedPlugin);
         return plugin.name === expectedPlugin;
       });
       expect(pluginExists).toBeTruthy();
