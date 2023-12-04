@@ -66,6 +66,7 @@
     beforeMount() {
       this.fields[0].options = this.eventOptions
       if (!this.events?.length && !this.loadingEvents) {
+        console.log('fetchEvents called from beforeMount');
         this.fetchEvents()
       }
     },
@@ -83,6 +84,9 @@
         })
       },
       upcomingEvents() {
+        if (!this.events) {
+          return [];
+        }
         const upcoming = this.events.slice(0, 3)
         return upcoming.map(e => {
           return {
