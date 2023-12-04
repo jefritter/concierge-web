@@ -66,7 +66,6 @@
     beforeMount() {
       this.fields[0].options = this.eventOptions
       if (!this.events?.length && !this.loadingEvents) {
-        console.log('fetchEvents called from beforeMount');
         this.fetchEvents()
       }
     },
