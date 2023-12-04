@@ -1,7 +1,7 @@
 <template>
   <div class="dining-management">
     <CustomHeader subtitle="Dining" />
-    <NavBar />
+    <NavBar class="nav" :additionalLink="diningHomeLink"/>
     <h2>Dining Management</h2>
     <div class="main-container">
       <div class="content">
@@ -54,6 +54,10 @@ export default {
   },
   data() {
     return {
+      diningHomeLink: {
+        to: '/dining',
+        text: 'Dining Home'
+      },
       resCols: [
         {
           id: 'date',

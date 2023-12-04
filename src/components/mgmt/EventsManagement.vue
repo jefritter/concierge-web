@@ -43,6 +43,10 @@ export default {
   },
   data() {
     return {
+      eventsHomeLink: {
+        to: '/events',
+        text: 'Events Home'
+      },
       eventsCols: [
         {
           id: 'title',
