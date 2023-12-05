@@ -34,6 +34,7 @@ import ReservationTable from '@/components/shared/ReservationTable.vue'
 import { mapActions, mapState } from 'pinia'
 import { useEventsStore } from '@/stores/events'
 import { useReservationsStore } from '@/stores/reservations'
+import dayjs from  'dayjs'
 
 export default {
   components: {
@@ -92,41 +93,18 @@ export default {
           label: 'Date'
         },
         {
-          id: 'event-name',
+          id: 'eventName',
           label: 'Event'
         },
         {
           id: 'client',
           label: 'Client'
+        },
+        {
+          id: 'party_count',
+          label: 'Party #'
         }
       ],
-      resRows: [
-        {
-          'event-name': 'La Scala Opera Trip',
-          client: 'John Doe',
-          date: '2023-10-20 19:30:00'
-        },
-        {
-          'event-name': 'Night Club Hop',
-          client: 'Jane Smith',
-          date: '2023-10-26 02:00:00'
-        },
-        {
-          'event-name': 'Wine Tasting Event',
-          client: 'Robert Johnson',
-          date: '2023-11-05 18:00:00'
-        },
-        {
-          'event-name': 'Charity Gala',
-          client: 'Emily Davis',
-          date: '2023-12-10 19:00:00'
-        },
-        {
-          'event-name': 'Beach Bonfire Party',
-          client: 'Michael Wilson',
-          date: '2023-11-15 19:00:00'
-        }
-      ]
     }
   },
   computed: {
@@ -153,11 +131,24 @@ export default {
           endTime: event.end_time
         }
       })
+    },
+    resRows() {
+      return this.reservations.map(res => {
+        const event = this.events.find(e => e.id === res.event_id)
+        const fullname = `${res.first_name} ${res.last_name}`
+        const date = dayjs(event.start_time).format('M/D/YYYY')
+        return {
+          ...res,
+          eventName: event.title,
+          client: fullname,
+          date: date
+        }
+      })
     }
   },
   methods: {
     ...mapActions(useEventsStore, ['addEvent', 'deleteEvent', 'fetchEvents']),
-    ...mapActions(useReservationsStore, ['fetchEventReservations']),
+    ...mapActions(useReservationsStore, ['fetchEventReservations', 'updateEventReservation', 'deleteEventReservation']),
     handleAddEvent(inputs) {
       this.addEvent(inputs)
     },
@@ -167,13 +158,22 @@ export default {
         title: event.title
       })
     },
-    updateReservation(obj) {
-      console.log('reservation added')
-      console.log(JSON.stringify(obj))
+    updateReservation(res) {
+      const names = res.client.split(' ')
+      const firstName = names[0]
+      const lastName = names[names.length - 1]
+
+      res.first_name = firstName
+      res.last_name = lastName
+
+      delete res.eventName
+      delete res.client
+      delete res.date
+
+      this.updateEventReservation(res)
     },
     deleteReservation(res) {
-      console.log('reservation deleted')
-      console.log(JSON.stringify(res))
+      this.deleteEventReservation(res.id)
     },
     parseDescription(desc) {
       let result = ''

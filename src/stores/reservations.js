@@ -1,14 +1,13 @@
 import { defineStore } from 'pinia'
 
-export const useReservationsStore = defineStore({
+export const useReservationsStore = defineStore('reservations', {
   id: 'reservations',
   state: () => ({
     loadingDiningReservations: false,
     loadingEventReservations: false,
     reservationsDining: [],
     reservationsEvents: [],
-    reservationsSpa: [],
-    loadingEvents: false
+    reservationsSpa: []
   }),
   getters: {
     getDiningReservations: (state) => {
@@ -65,7 +64,7 @@ export const useReservationsStore = defineStore({
     },
     async deleteDiningReservation(id) {
       if (!id) {
-        console.log('id required to delete event')
+        console.log('id required to delete reservation')
         return
       }
       const requestOptions = {
@@ -116,6 +115,67 @@ export const useReservationsStore = defineStore({
         console.log(error)
       } finally {
         this.loadingEventsReservations = false;
+      }
+    },
+    async addEventReservation(params) {
+      const requestOptions = {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(params)
+      }
+      try {
+        await fetch('/api/reservation/event', requestOptions)
+          .then((response) => {
+            if (response.status >= 200 && response.status <= 300) {
+              alert(`Reservations successfully added`)
+              this.fetchEventReservations()
+            }
+          })
+          
+      } catch (error) {
+        console.log(error)
+      }
+    },
+    async updateEventReservation(params) {
+      const requestOptions = {
+        method: 'PUT',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(params)
+      }
+      try {
+        await fetch('/api/reservation/event', requestOptions)
+          .then((response) => {
+            if (response.status === 200) {
+              alert(`Reservation successfully updated`)
+              this.fetchEventReservations()
+            }
+          })
+          
+      } catch (error) {
+        console.log(error)
+      }
+    },
+    async deleteEventReservation(id) {
+      if (!id) {
+        console.log('id required to delete reservation')
+        return
+      }
+      const requestOptions = {
+        method: 'DELETE',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ id: id })
+      }
+      try {
+        await fetch(`/api/reservation/event`, requestOptions)
+          .then((response) => {
+            if (response.status === 202) {
+              alert(`Reservation successfully deleted`)
+              this.fetchEventReservations()
+            }
+          })
+          
+      } catch (error) {
+        console.log(error)
       }
     }
   }
