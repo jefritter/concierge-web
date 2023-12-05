@@ -4,6 +4,7 @@ export const useSpaStore = defineStore({
   id: 'services',
   state: () => ({
     loadingSpaServices: false,
+    loadingTherapists: false,
     spaServices: [],
     therapists: []
   }),
@@ -13,6 +14,12 @@ export const useSpaStore = defineStore({
     },
     getTherapists: (state) => {
       return state.therapists
+    },
+    getLoadingSpaServices: (state) => {
+      return state.loadingSpaServices
+    },
+    getLoadingTherapists: (state) => {
+      return state.loadingTherapists
     }
   },
   actions: {
