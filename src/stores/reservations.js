@@ -4,6 +4,7 @@ export const useReservationsStore = defineStore({
   id: 'reservations',
   state: () => ({
     loadingDiningReservations: false,
+    loadingEventReservations: false,
     reservationsDining: [],
     reservationsEvents: [],
     reservationsSpa: [],
@@ -18,6 +19,9 @@ export const useReservationsStore = defineStore({
     },
     getSpaReservations: (state) => {
       return state.reservationsSpa
+    },
+    getLoadingEventReservations: (state) => {
+      return state.loadingEventReservations
     }
   },
   actions: {
@@ -96,6 +100,22 @@ export const useReservationsStore = defineStore({
         console.log(error)
       } finally {
         this.loadingDiningReservations = false;
+      }
+    },
+    async fetchEventReservations() {
+      this.loadingEventsReservations = true
+      try {
+        await fetch('/api/reservation/event')
+          .then((response) => response.json())
+          .then(({ data }) => {
+            if (data) {
+              this.reservationsEvents = data
+            }
+          })
+      } catch (error) {
+        console.log(error)
+      } finally {
+        this.loadingEventsReservations = false;
       }
     }
   }

@@ -33,6 +33,7 @@ import BasicTable from '@/components/shared/BasicTable.vue'
 import ReservationTable from '@/components/shared/ReservationTable.vue'
 import { mapActions, mapState } from 'pinia'
 import { useEventsStore } from '@/stores/events'
+import { useReservationsStore } from '@/stores/reservations'
 
 export default {
   components: {
@@ -133,6 +134,10 @@ export default {
       events: 'getEvents',
       loadingEvents: 'loadingEvents'
     }),
+    ...mapState(useReservationsStore, {
+      reservations: 'getEventsReservations',
+      loadingEventReservations: 'getLoadingEventReservations'
+    }),
     eventsRows() {
       return this.events.map(event => {
         return {
@@ -152,6 +157,7 @@ export default {
   },
   methods: {
     ...mapActions(useEventsStore, ['addEvent', 'deleteEvent', 'fetchEvents']),
+    ...mapActions(useReservationsStore, ['fetchEventReservations']),
     handleAddEvent(inputs) {
       this.addEvent(inputs)
     },
@@ -181,6 +187,9 @@ export default {
   beforeMount() {
     if (!this.loadingEvents) {
       this.fetchEvents()
+    }
+    if (!this.loadingEventReservations) {
+      this.fetchEventReservations()
     }
   },
 }
