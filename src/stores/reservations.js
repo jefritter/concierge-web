@@ -5,6 +5,7 @@ export const useReservationsStore = defineStore('reservations', {
   state: () => ({
     loadingDiningReservations: false,
     loadingEventReservations: false,
+    loadingSpaReservations: false,
     reservationsDining: [],
     reservationsEvents: [],
     reservationsSpa: []
@@ -19,8 +20,14 @@ export const useReservationsStore = defineStore('reservations', {
     getSpaReservations: (state) => {
       return state.reservationsSpa
     },
+    getLoadingDiningReservations: (state) => {
+      return state.loadingDiningReservations
+    },
     getLoadingEventReservations: (state) => {
       return state.loadingEventReservations
+    },
+    getLoadingSpaReservations: (state) => {
+      return state.loadingSpaReservations
     }
   },
   actions: {
@@ -75,7 +82,7 @@ export const useReservationsStore = defineStore('reservations', {
       try {
         await fetch(`/api/reservation/dining`, requestOptions)
           .then((response) => {
-            if (response.status === 202) {
+            if (response.status === 200) {
               alert(`Reservation successfully deleted`)
               this.fetchDiningReservations()
             }
@@ -168,9 +175,86 @@ export const useReservationsStore = defineStore('reservations', {
       try {
         await fetch(`/api/reservation/event`, requestOptions)
           .then((response) => {
-            if (response.status === 202) {
+            if (response.status === 200) {
               alert(`Reservation successfully deleted`)
               this.fetchEventReservations()
+            }
+          })
+          
+      } catch (error) {
+        console.log(error)
+      }
+    },
+    async fetchSpaReservations() {
+      this.loadingSpaReservations = true
+      try {
+        await fetch('/api/reservation/spa')
+          .then((response) => response.json())
+          .then(({ data }) => {
+            if (data) {
+              this.reservationsSpa = data
+            }
+          })
+      } catch (error) {
+        console.log(error)
+      } finally {
+        this.loadingSpaReservations = false;
+      }
+    },
+    async addSpaReservation(params) {
+      const requestOptions = {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(params)
+      }
+      try {
+        await fetch('/api/reservation/spa', requestOptions)
+          .then((response) => {
+            if (response.status >= 200 && response.status <= 300) {
+              alert(`Reservations successfully added`)
+              this.fetchSpaReservations()
+            }
+          })
+          
+      } catch (error) {
+        console.log(error)
+      }
+    },
+    async updateSpaReservation(params) {
+      const requestOptions = {
+        method: 'PUT',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(params)
+      }
+      try {
+        await fetch('/api/reservation/spa', requestOptions)
+          .then((response) => {
+            if (response.status === 200) {
+              alert(`Reservation successfully updated`)
+              this.fetchSpaReservations()
+            }
+          })
+          
+      } catch (error) {
+        console.log(error)
+      }
+    },
+    async deleteSpaReservation(id) {
+      if (!id) {
+        console.log('id required to delete reservation')
+        return
+      }
+      const requestOptions = {
+        method: 'DELETE',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ id: id })
+      }
+      try {
+        await fetch(`/api/reservation/spa`, requestOptions)
+          .then((response) => {
+            if (response.status === 200) {
+              alert(`Reservation successfully deleted`)
+              this.fetchSpaReservations()
             }
           })
           
