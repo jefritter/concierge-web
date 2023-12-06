@@ -31,37 +31,15 @@
   import CustomHeader from '@/components/shared/CustomHeader.vue'
   import NavBar from '@/components/shared/NavBar.vue'
   import ReservationForm from '@/components/shared/ReservationForm.vue'
-  import { mapActions } from 'pinia'
-  import { mapState } from 'pinia'
+  import { mapActions, mapState } from 'pinia'
   import { useEventsStore } from '@/stores/events'
+  import { useReservationsStore } from '@/stores/reservations'
 
   export default {
     components: {
       CustomHeader,
       NavBar,
       ReservationForm
-    },
-   data() {
-      return {
-        fields: [
-          {
-            id: 'event',
-            label: 'Event',
-            type: 'multi-select',
-            options: []
-          },
-          {
-            id: 'name',
-            label: 'Name',
-            type: 'text'
-          },
-          {
-            id: 'count',
-            label: '# in party',
-            type: 'number'
-          }
-        ]
-      }
     },
     beforeMount() {
       this.fields[0].options = this.eventOptions
@@ -82,6 +60,26 @@
           }
         })
       },
+      fields() {
+        return [
+          {
+            id: 'event',
+            label: 'Event',
+            type: 'multi-select',
+            options: this.eventOptions
+          },
+          {
+            id: 'name',
+            label: 'Name',
+            type: 'text'
+          },
+          {
+            id: 'count',
+            label: '# in party',
+            type: 'number'
+          }
+        ]
+      },
       upcomingEvents() {
         const upcoming = this.events.slice(0, 3)
         return upcoming.map(e => {
@@ -98,6 +96,7 @@
     },
     methods: {
       ...mapActions(useEventsStore, ['fetchEvents']),
+      ...mapActions(useReservationsStore, ['addEventReservation']),
       parseDescription(desc) {
         let result = ''
         const descriptionLength = desc?.length
@@ -107,10 +106,18 @@
         return result
       },
       submitReservation(values) {
-        const isValid = this.validateInputs(values)
-        if (isValid) {
-          console.log('submitting')
+        const names = values.name.split(' ')
+        const firstName = names[0]
+        const lastName = names[names.length - 1]
+
+        const payload = {
+          eventId: values.event,
+          firstName: firstName,
+          lastName: lastName,
+          partyCount: values.count
         }
+
+        this.addEventReservation(payload)
       },
       validateInputs(values) {
         return !!values

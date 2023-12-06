@@ -33,12 +33,16 @@
 </template>
 
 <script>
-import CustomHeader from '../shared/CustomHeader.vue';
-import NavBar from '@/components/shared/NavBar.vue';
+import CustomHeader from '../shared/CustomHeader.vue'
+import NavBar from '@/components/shared/NavBar.vue'
 import ReservationForm from '@/components/shared/ReservationForm.vue'
 import { mapActions } from 'pinia'
 import { mapState } from 'pinia'
 import { useSpaStore } from '@/stores/spa'
+import { useReservationsStore } from '@/stores/reservations'
+import dayjs from  'dayjs'
+import utc from 'dayjs/plugin/utc'
+dayjs.extend(utc)
 
 export default {
   components: {
@@ -46,9 +50,15 @@ export default {
     NavBar,
     ReservationForm
   },
-  data() {
-    return {
-      fields: [
+  computed: {
+    ...mapState(useSpaStore, {
+      loadingSpaServices: 'loadingSpaServices',
+      loadingTherapists: 'loadingTherapists',
+      services: 'getSpaServices',
+      spaStaff: 'getTherapists'
+    }),
+    fields() {
+      return [
         {
           id: 'date',
           label: 'Date',
@@ -60,6 +70,11 @@ export default {
           type: 'time'
         },
         {
+          id: 'duration',
+          label: 'Duration',
+          type: 'number'
+        },
+        {
           id: 'name',
           label: 'Name',
           type: 'text'
@@ -68,33 +83,51 @@ export default {
           id: 'service',
           label: 'Service',
           type: 'multi-select',
-          options: []
+          options: this.services
+        },
+        {
+          id: 'therapist',
+          label: 'Staff',
+          type: 'multi-select',
+          options: this.therapists
         }
       ]
-    };
-  },
-  computed: {
-    ...mapState(useSpaStore, {
-      services: 'getSpaServices',
-      loadingSpaServices: 'loadingSpaServices'
-    })
+    },
+    therapists() {
+      return this.spaStaff.map(person => {
+        return {
+          id: person.id,
+          title: `${person.first_name} ${person.last_name}`
+        }
+      })
+    }
   },
   beforeMount() {
     if (!this.services?.length && !this.loadingSpaServices) {
       this.fetchSpaServices()
     }
-    this.fields[3].options = this.services
+    if (!this.therapists?.length && !this.loadingTherapists) {
+      this.fetchTherapists()
+    }
   },
   methods: {
-    ...mapActions(useSpaStore, ['fetchSpaServices']),
+    ...mapActions(useSpaStore, ['fetchSpaServices', 'fetchTherapists']),
+    ...mapActions(useReservationsStore, ['addSpaReservation']),
     submitReservation(values) {
-      const isValid = this.validateInputs(values)
-      if (isValid) {
-        console.log('submitting')
+      const times = values.time.split(/(:|\s+)/)
+      const totalTimeInMinutes = (parseInt(times[0]) * 60) + parseInt(times[2])
+      const resDate = dayjs(values.date).utcOffset(0).startOf('day')
+      const resDateTime = resDate.add(totalTimeInMinutes, 'minutes')
+      const resDuration = parseInt(values.duration)
+      const resEndTime = resDateTime.add(resDuration, 'minute')
+      const payload = {
+        therapistId: values.therapist,
+        clientName: values.name,
+        spaService: values.service,
+        resStartTime: resDateTime.toISOString(),
+        resEndTime: resEndTime.toISOString()
       }
-    },
-    validateInputs(values) {
-      return !!values;
+      this.addSpaReservation(payload)
     }
   }
 }

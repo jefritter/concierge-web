@@ -33,9 +33,14 @@
 </template>
 
 <script>
-import CustomHeader from '@/components/shared/CustomHeader.vue';
+import CustomHeader from '@/components/shared/CustomHeader.vue'
 import ReservationForm from '@/components/shared/ReservationForm.vue'
-import NavBar from '@/components/shared/NavBar.vue';
+import NavBar from '@/components/shared/NavBar.vue'
+import { mapActions } from 'pinia'
+import { useReservationsStore } from '@/stores/reservations'
+import dayjs from  'dayjs'
+import utc from 'dayjs/plugin/utc'
+dayjs.extend(utc)
 
 export default {
   components: {
@@ -100,16 +105,29 @@ export default {
       }
   },
   methods: {
-      submitReservation(values) {
-        const isValid = this.validateInputs(values)
-        if (isValid) {
-          console.log('submitting')
-        }
-      },
-      validateInputs(values) {
-        return !!values;
+    ...mapActions(useReservationsStore, ['addDiningReservation']),
+    submitReservation(values) {
+      const names = values.name.split(' ')
+      const firstName = names[0]
+      const lastName = names[names.length - 1]
+      const times = values.time.split(/(:|\s+)/)
+      const totalTimeInMinutes = (parseInt(times[0]) * 60) + parseInt(times[2])
+      const resDate = dayjs(values.date).utcOffset(0).startOf('day')
+      const resDateTime = resDate.add(totalTimeInMinutes, 'minutes')
+
+      const payload = {
+        firstName: firstName,
+        lastName: lastName,
+        guestCount: values.count,
+        resTime: resDateTime
       }
+
+      this.addDiningReservation(payload)
+    },
+    validateInputs(values) {
+      return !!values;
     }
+  }
 }
 </script>
   

@@ -1,6 +1,6 @@
 import { defineStore } from 'pinia'
 
-export const useAdminStore = defineStore({
+export const useAdminStore = defineStore('admin', {
   id: 'admin',
   state: () => ({
     loadingManagers: false,

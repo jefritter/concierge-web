@@ -35,6 +35,10 @@ import NavBar from '@/components/shared/NavBar.vue';
 import { mapActions } from 'pinia'
 import { mapState } from 'pinia'
 import { useSpaStore } from '@/stores/spa'
+import { useReservationsStore } from '@/stores/reservations'
+import dayjs from  'dayjs'
+import utc from 'dayjs/plugin/utc'
+dayjs.extend(utc)
 
 export default {
   components: {
@@ -44,7 +48,15 @@ export default {
     NavBar
   },
   beforeMount() {
-    this.fetchSpaServices()
+    if (!this.services?.length) {
+      this.fetchSpaServices()
+    }
+    if (!this.therapists?.length) {
+      this.fetchTherapists()
+    }
+    if (!this.loadingSpaReservations) {
+      this.fetchSpaReservations()
+    }
   },
   data() {
     return {
@@ -52,32 +64,6 @@ export default {
         to: '/spa',
         text: 'Spa Home'
       },
-      reservations: [
-        {
-          date: '1/2/24',
-          time: '10:00am',
-          duration: 60,
-          service: 'swedish massage',
-          client: 'Jane Doe',
-          staff: 'Nancy Drew'
-        },
-        {
-          date: '1/2/24',
-          time: '11:00am',
-          duration: 60,
-          service: 'hot stone massage',
-          client: 'John Smith',
-          staff: 'Sally Good'
-        },
-        {
-          date: '1/2/24',
-          time: '2:30am',
-          duration: 30,
-          service: 'pedicure',
-          client: 'Mary Jackson',
-          staff: 'Shari Samson'
-        }
-      ],
       resCols: [
         {
           id: 'date',
@@ -118,7 +104,12 @@ export default {
   },
   computed: {
     ...mapState(useSpaStore, {
-      services: 'getSpaServices'
+      services: 'getSpaServices',
+      therapists: 'getTherapists'
+    }),
+    ...mapState(useReservationsStore, {
+      loadingSpaReservations: 'getLoadingSpaReservations',
+      spaReservations: 'getSpaReservations'
     }),
     servicesRowData() {
       return this.services.map(svc => {
@@ -128,17 +119,50 @@ export default {
           'descript': svc.descript
         }
       })
+    },
+    reservations() {
+      return this.spaReservations.map(res => {
+        const dayjsStartTime = dayjs(res.res_start_time)
+        const duration = dayjs(res.res_end_time).diff(dayjsStartTime, 'minute')
+        const therapist = this.therapists.find(obj => obj.id === res.therapist_id)
+        const therapistName = `${therapist.first_name} ${therapist.last_name}`
+        const service = this.services.find(obj => obj.id === res.spa_service)
+        const serviceLabel = service.title
+        return {
+          ...res,
+          date: dayjsStartTime.utc().format('M/D/YYYY'),
+          time: dayjsStartTime.utc().format('H:mm a'),
+          duration: duration,
+          client: res.client_name,
+          staff: therapistName,
+          service: serviceLabel
+        }
+      })
     }
   },
   methods: {
-    ...mapActions(useSpaStore, ['addSpaService', 'deleteSpaService', 'fetchSpaServices']),
+    ...mapActions(useSpaStore, ['addSpaService', 'deleteSpaService', 'fetchSpaServices', 'fetchTherapists']),
+    ...mapActions(useReservationsStore, ['fetchSpaReservations', 'updateSpaReservation', 'deleteSpaReservation']),
     updateReservation(obj) {
-      console.log('manager added')
-      console.log(JSON.stringify(obj))
+      const times = obj.time.split(/(:|\s+)/)
+      const totalTimeInMinutes = (parseInt(times[0]) * 60) + parseInt(times[2])
+      console.log('times: ', times)
+      console.log('totalTimeInMinutes: ', totalTimeInMinutes)
+      const dayjsDate = dayjs(obj.date).utcOffset(0).startOf('day')
+      const startTime = dayjsDate.add(totalTimeInMinutes, 'minutes')
+      const resDuration = parseInt(obj.duration)
+      const endTime = startTime.add(resDuration, 'minutes')
+
+      const payload = {
+        id: obj.id,
+        resStartTime: startTime.format('YYYY-MM-DDTHH:mm:ss'),
+        resEndTime: endTime.format('YYYY-MM-DDTHH:mm:ss')
+      }
+      
+      this.updateSpaReservation(payload)
     },
     deleteReservation(res) {
-      console.log('manager deleted')
-      console.log(JSON.stringify(res))
+      this.deleteSpaReservation(res.id)
     },
     addService(inputs) {
       const newService = {

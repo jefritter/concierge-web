@@ -4,11 +4,22 @@ export const useSpaStore = defineStore({
   id: 'services',
   state: () => ({
     loadingSpaServices: false,
-    spaServices: []
+    loadingTherapists: false,
+    spaServices: [],
+    therapists: []
   }),
   getters: {
     getSpaServices: (state) => {
       return state.spaServices
+    },
+    getTherapists: (state) => {
+      return state.therapists
+    },
+    getLoadingSpaServices: (state) => {
+      return state.loadingSpaServices
+    },
+    getLoadingTherapists: (state) => {
+      return state.loadingTherapists
     }
   },
   actions: {
@@ -61,6 +72,20 @@ export const useSpaStore = defineStore({
         console.log(error)
       } finally {
         this.loadingSpaServices = false;
+      }
+    },
+    async fetchTherapists() {
+      this.loadingTherapists = true
+      try {
+        await fetch('/api/spa/therapists')
+          .then((response) => response.json())
+          .then(({ data }) => (
+            this.therapists = data
+          ))
+      } catch (error) {
+        console.log(error)
+      } finally {
+        this.loadingTherapists = false;
       }
     }
   }
