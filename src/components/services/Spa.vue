@@ -114,7 +114,6 @@ export default {
     ...mapActions(useSpaStore, ['fetchSpaServices', 'fetchTherapists']),
     ...mapActions(useReservationsStore, ['addSpaReservation']),
     submitReservation(values) {
-      console.log('submitting')
       const times = values.time.split(/(:|\s+)/)
       const totalTimeInMinutes = (parseInt(times[0]) * 60) + parseInt(times[2])
       const resDate = dayjs(values.date).utcOffset(0).startOf('day')
