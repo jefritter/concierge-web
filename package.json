@@ -12,8 +12,8 @@
   },
   "dependencies": {
     "@fullcalendar/vue3": "^6.1.9",
-    "fullcalendar": "^6.1.9",
     "chart.js": "^4.4.0",
+    "fullcalendar": "^6.1.9",
     "pinia": "^2.1.6",
     "vue": "^3.3.4",
     "vue-chartjs": "^5.2.0",
@@ -31,6 +31,6 @@
     "prettier": "^3.0.0",
     "sass": "^1.68.0",
     "vite": "^4.4.9",
-    "vitest": "^0.34.2"
+    "vitest": "^0.34.6"
   }
 }
