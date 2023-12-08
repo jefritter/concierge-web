@@ -16,8 +16,7 @@
             v-on:submit.prevent="validate"
             autocomplete="off"
             id="Form"
-          >
-  
+          > 
         <!-- Invalid email -->
         <span class="invalid-feedback" v-if="validation.invalid.email">
           {{ validation.invalid.email }}
@@ -44,7 +43,6 @@
               required
             />
         </div>
-
         <!-- Valid Password -->
         <span class="invalid-feedback" v-if="validation.invalid.password">
           {{ validation.invalid.password }}
@@ -62,15 +60,14 @@
               class="form-input" 
               placeholder="Password" 
               :class="{
-                  'is-valid' : validation.valid.password,
-                  'is-invalid' : validation.invalid.password
+                'is-valid' : validation.valid.password,
+                'is-invalid' : validation.invalid.password
               }"
-              v-on:enter="validate('password')"
+              v-on:blur="validate('password')"
               v-model="password"
               required
             />
-        </div>
-                  
+        </div>                  
         <div class="form-field"> 
           <button class="submit" @click="loginUser" :disabled="submitIsDisabled">Log In</button>
         </div>
