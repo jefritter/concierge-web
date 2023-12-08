@@ -2,6 +2,7 @@
   <div class="admin-dashboard">
     <CustomHeader
       subtitle="Admin"/>
+    <NavBar class="nav" />
     <div class="content">
       <div class="col left">
         <BasicTable 
@@ -35,12 +36,14 @@
 import CustomHeader from '../shared/CustomHeader.vue'
 import BarChart from '@/components/shared/BarChart.vue'
 import BasicTable from '@/components/shared/BasicTable.vue'
+import NavBar from '@/components/shared/NavBar.vue'
 
 export default {
   components: {
     CustomHeader,
     BarChart,
-    BasicTable
+    BasicTable,
+    NavBar
   },
   data() {
     return {

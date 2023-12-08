@@ -4,6 +4,7 @@
       <router-link to="/">Home</router-link>
       <router-link to="/calendar">Calendar</router-link>
       <router-link to="/services">Services</router-link>
+      <router-link v-if="showAdminDashboard" to="/admin">Admin</router-link>
       <router-link v-if="showDiningMgmt" to="/mgmt/dining">Dining Mgmt</router-link>
       <router-link v-if="showEventsMgmt" to="/mgmt/events">Events Mgmt</router-link>
       <router-link v-if="showSpaMgmt" to="/mgmt/spa">Spa Mgmt</router-link>

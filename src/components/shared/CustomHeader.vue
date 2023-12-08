@@ -5,7 +5,7 @@
       <h1>My Concierge</h1>
       <h1 v-if="subtitle">&nbsp;- {{ subtitle }}</h1>
     </div>
-    <div class="right-section">
+    <div v-if="!mgmtPage" class="right-section">
       <button><router-link to="/login">Sign in</router-link></button>
       <button><router-link to="/register">Sign up</router-link></button>
     </div>
@@ -24,6 +24,13 @@ export default {
     },
     backgroundColor: {
       type: String
+    }
+  },
+  computed: {
+    mgmtPage() {
+      const path = this.$router.currentRoute.value.path
+      console.log(path)
+      return path === '/mgmt/dining' || path === '/mgmt/events' || path === '/mgmt/spa' || path === '/admin'
     }
   }
 }
