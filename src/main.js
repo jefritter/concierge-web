@@ -1,16 +1,15 @@
 import './assets/main.css'
 
 import { createApp } from 'vue'
-import { createPinia } from 'pinia'
-
 import App from './App.vue'
+import store from '@/stores/store.js'
 import router from './router'
-import NavBar from '@/components/shared/NavBar.vue';
 
 const app = createApp(App)
 
-app.use(createPinia())
+app.use(store)
 app.use(router)
-app.component('NavBar', NavBar);
 
-app.mount('#app')
+router.isReady().then(() => {
+  app.mount('#app')
+})

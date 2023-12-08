@@ -1,9 +1,10 @@
 <template>
   <div class="main-header" :class="fontColor">
-    <img class=logo src="../../assets/butler.png">
-    <h1>My Concierge</h1>
-    <h1 v-if="subtitle">&nbsp;- {{ subtitle }}</h1>
-
+    <div class="left-section">
+      <img class=logo src="../../assets/butler.png">
+      <h1>My Concierge</h1>
+      <h1 v-if="subtitle">&nbsp;- {{ subtitle }}</h1>
+    </div>
     <div class="right-section">
       <button><router-link to="/login">Sign in</router-link></button>
       <button><router-link to="/register">Sign up</router-link></button>
@@ -32,8 +33,6 @@ export default {
 .main-header {
   background-color: #84A7AE;
   display: flex;
-  align-items: flex-end;
-  justify-content: flex-start;
   height: 180px;
   padding: 20px;
   width: 100%;
@@ -56,20 +55,39 @@ export default {
     font-size: 3rem;
   }
 
-  .right-section {
-    position: absolute;
-    display: block;
-    padding-right: 20px;
-    right: 0;
-    padding-left: 50px;
+  .left-section, .right-section {
+    display: flex;
+    align-items: flex-end;
+    justify-content: flex-start;
   }
+
+  .right-section {
+    flex-grow: 1;
+    justify-content: flex-end;
+  }
+
   button {
     background-color: white;
-    color: rgb(0, 0, 0);
-    padding: 15px 30px;
+    border: 1px solid black;
+    border-radius: 6px;
+    // color: rgb(0, 0, 0);
+    // padding: 15px 30px;
+    height: 50px;
+    width: 110px;
     text-align: center;
-    display: inline-block;
     font-size: 16px;
+    margin-left: 20px;
+    &:hover {
+      background-color: #dfe4dc;
+      border: 2px solid black;
+    }
+    a {
+      color: black;
+      display: block;
+      height: 50px;
+      padding: 15px;
+      width: 100%;
+    }
   }
 }
 </style>
