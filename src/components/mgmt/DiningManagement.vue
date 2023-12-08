@@ -95,7 +95,7 @@ export default {
     }
   },
   beforeMount() {
-    if (!this.reservations?.length && !this.loadingDiningReservations) {
+    if (!this.loadingDiningReservations) {
       this.fetchDiningReservations()
     }
   },
@@ -109,7 +109,7 @@ export default {
     },
     reservations() {
       return this.diningReservations?.map(res => {
-        const dayjsDateTime = dayjs(res.res_time)
+        const dayjsDateTime = dayjs(res.res_time).utc()
         const date = dayjsDateTime.format('M/D/YY')
         const time = dayjsDateTime.format('h:mm a')
         const fullName = `${res.first_name} ${res.last_name}`
@@ -132,9 +132,10 @@ export default {
       const first = names[0]
       const last = names[1]
       const times = res.time.split(/(:|\s+)/)
-      const totalTimeInMinutes = (parseInt(times[0]) * 60) + parseInt(times[2])
-      const resDateTime = dayjs(res.date).utcOffset(0).startOf('day')
-      resDateTime.add(totalTimeInMinutes, 'minutes').format('YYYY-MM-DDTHH:mm:ss')
+      const hour = times[4] === 'pm' ? parseInt(times[0]) + 12 : parseInt(times[0])
+      const totalTimeInMinutes = (hour * 60) + parseInt(times[2])
+      const resDate = dayjs(res.date).utcOffset(0).startOf('day')
+      const resDateTime = resDate.add(totalTimeInMinutes, 'minutes').format('YYYY-MM-DDTHH:mm:ss')
       
       const updatedRes = {
         id: res.id,

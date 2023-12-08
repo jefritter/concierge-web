@@ -146,8 +146,7 @@ export default {
     updateReservation(obj) {
       const times = obj.time.split(/(:|\s+)/)
       const totalTimeInMinutes = (parseInt(times[0]) * 60) + parseInt(times[2])
-      console.log('times: ', times)
-      console.log('totalTimeInMinutes: ', totalTimeInMinutes)
+
       const dayjsDate = dayjs(obj.date).utcOffset(0).startOf('day')
       const startTime = dayjsDate.add(totalTimeInMinutes, 'minutes')
       const resDuration = parseInt(obj.duration)

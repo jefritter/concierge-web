@@ -88,7 +88,7 @@ router.beforeEach((to, from, next) => {
   const loginStore = useLoginStore(pinia)
   const loggedIn = loginStore.loggedIn
   
-  if (!loggedIn && to.path !== '/' && to.path !== '/login' && to.path !== '/register') {
+  if (!loggedIn && to.path !== '/' && to.path !== '/home' && to.path !== '/login' && to.path !== '/register') {
     next('/login')
   } else {
     next()

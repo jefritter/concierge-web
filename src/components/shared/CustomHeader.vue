@@ -29,7 +29,6 @@ export default {
   computed: {
     mgmtPage() {
       const path = this.$router.currentRoute.value.path
-      console.log(path)
       return path === '/mgmt/dining' || path === '/mgmt/events' || path === '/mgmt/spa' || path === '/admin'
     }
   }

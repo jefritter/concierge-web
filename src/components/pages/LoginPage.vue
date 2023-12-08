@@ -63,7 +63,7 @@
                 'is-valid' : validation.valid.password,
                 'is-invalid' : validation.invalid.password
               }"
-              v-on:blur="validate('password')"
+              v-on:blur="validatePassword('password')"
               v-model="password"
               required
             />
