@@ -99,7 +99,8 @@ export const useReservationsStore = defineStore('reservations', {
           .then((response) => response.json())
           .then(({ data }) => {
             if (data) {
-              this.reservationsDining = data
+              const sorted = data.toSorted((a, b) => a.id - b.id)
+              this.reservationsDining = sorted
             }
           })
       } catch (error) {
@@ -115,7 +116,8 @@ export const useReservationsStore = defineStore('reservations', {
           .then((response) => response.json())
           .then(({ data }) => {
             if (data) {
-              this.reservationsEvents = data
+              const sorted = data.sort((a, b) => a.id - b.id)
+              this.reservationsEvents = sorted
             }
           })
       } catch (error) {
@@ -192,7 +194,8 @@ export const useReservationsStore = defineStore('reservations', {
           .then((response) => response.json())
           .then(({ data }) => {
             if (data) {
-              this.reservationsSpa = data
+              const sorted = data.sort((a, b) => a.res_start_time - b.res_start_time)
+              this.reservationsSpa = sorted
             }
           })
       } catch (error) {

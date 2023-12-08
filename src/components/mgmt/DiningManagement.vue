@@ -95,7 +95,7 @@ export default {
     }
   },
   beforeMount() {
-    if (!this.reservations?.length && !this.loadingDiningReservations) {
+    if (!this.loadingDiningReservations) {
       this.fetchDiningReservations()
     }
   },
@@ -109,7 +109,7 @@ export default {
     },
     reservations() {
       return this.diningReservations?.map(res => {
-        const dayjsDateTime = dayjs(res.res_time)
+        const dayjsDateTime = dayjs(res.res_time).utc()
         const date = dayjsDateTime.format('M/D/YY')
         const time = dayjsDateTime.format('h:mm a')
         const fullName = `${res.first_name} ${res.last_name}`
@@ -132,9 +132,10 @@ export default {
       const first = names[0]
       const last = names[1]
       const times = res.time.split(/(:|\s+)/)
-      const totalTimeInMinutes = (parseInt(times[0]) * 60) + parseInt(times[2])
-      const resDateTime = dayjs(res.date).utcOffset(0).startOf('day')
-      resDateTime.add(totalTimeInMinutes, 'minutes').format('YYYY-MM-DDTHH:mm:ss')
+      const hour = times[4] === 'pm' ? parseInt(times[0]) + 12 : parseInt(times[0])
+      const totalTimeInMinutes = (hour * 60) + parseInt(times[2])
+      const resDate = dayjs(res.date).utcOffset(0).startOf('day')
+      const resDateTime = resDate.add(totalTimeInMinutes, 'minutes').format('YYYY-MM-DDTHH:mm:ss')
       
       const updatedRes = {
         id: res.id,
@@ -158,36 +159,9 @@ export default {
   flex-direction: column;
   height: 130vh;
   background-color: white;
-  nav {
-    margin: 0;
-    padding: 12px;
-    border-bottom: 1px solid black;
-    background-color: white;
-    text-align: center;
-  }
-  .main-header {
-    background-color: #ECEBEB;
-    h1 {
-      color: #84A7AE;
-    }
-  }
+  
   h2 {
     margin-top: 3rem;
-  }
-  .content {
-    display: flex;
-    gap: 4rem;
-    justify-content: space-between;
-    margin: 0 auto;
-    padding: 3rem;
-    .col {
-      align-items: center;
-      display: flex;
-      flex-direction: column;
-    }
-    .basic-table.services {
-      margin-top: 4rem;
-    }
   }
 
   .main-container {
@@ -196,55 +170,70 @@ export default {
     justify-content: space-around;
     flex-wrap: wrap;
     padding: 0em;
-    .services {    
-      padding: 20px 40px 40px 40px;
-      border: 1px solid black;
+    .content {
+      display: flex;
+      gap: 4rem;
+      justify-content: space-between;
+      margin: 0 auto;
+      padding: 3rem;
+      .col {
+        align-items: center;
+        display: flex;
+        flex-direction: column;
+      }
+      .services {    
+        padding: 20px 40px 40px 40px;
+        border: 1px solid black;
+        h3 {
+          font-size: x-large;
+          text-align: center;
+          color: black;
+          padding: 10px;
+        }
+        h3:after {
+          content: ' ';
+          display: block;
+          border: 1px solid black;
+          width: 100%;
+          margin-inline: auto;
+          margin-block: 6px;
+        }
+        h4 {
+          text-align: left;
+          padding-left: 0px;
+          font-size: 1.1rem;
+        }
+        .event-item {
+          margin-top: 1rem;
+          padding-left: 0px;
+          text-align: left;
+        }
+
+        .event-title {
+          font-size: 1rem;
+        }
+
+        .event-list {
+          font-size: 1rem;
+        }
+      }
+      .basic-table.services {
+        margin-top: 4rem;
+      }
     }
-    .services h3 {
-      font-size: x-large;
-      text-align: center;
-      color: black;
-      padding: 10px;
-    }
-    .services h3:after {
-      content: ' ';
-      display: block;
-      border: 1px solid black;
-      width: 100%;
-      margin-inline: auto;
-      margin-block: 6px;
-    }
-  }
-
-  h4 {
-    text-align: left;
-    padding-left: 0px;
-    font-size: 1.1rem;
-  }
-  .event-item {
-    margin-top: 1rem;
-    padding-left: 0px;
-    text-align: left;
-  }
-
-  .event-title {
-    font-size: 1rem;
-  }
-
-  .event-list {
-    font-size: 1rem;
-  }
-
-  button {
-    background-color: white;
-    color: rgb(105, 105, 105);
-    padding: 15px 71px;
-    text-align: center;
-    display: inline-block;
-    font-size: 16px;
-  }
-  .btn {
-    margin-top: 1.2rem;
+    .col.right {
+      button {
+        background-color: white;
+        color: rgb(105, 105, 105);
+        padding: 15px 71px;
+        text-align: center;
+        display: inline-block;
+        font-size: 16px;
+      }
+      .btn {
+        margin-top: 1.2rem;
+      }
+    }  
   }
 
   @media (max-width: 1208px) {

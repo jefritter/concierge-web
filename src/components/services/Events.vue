@@ -188,6 +188,7 @@
           border: 1px solid black;
           text-align: center;
           width: 100%;
+          max-width: 560px;
           span{
             font-size: 20px;
           }

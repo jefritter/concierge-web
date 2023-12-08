@@ -9,6 +9,10 @@ import AdminDashboard from '../components/mgmt/AdminDashboard.vue'
 import SpaManagement from '../components/mgmt/SpaManagement.vue'
 import EventsManagement from '../components/mgmt/EventsManagement.vue'
 import DiningManagement from '../components/mgmt/DiningManagement.vue'
+import LoginPage from '../components/pages/LoginPage.vue'
+import RegisterPage from '../components/pages/RegisterPage.vue'
+import pinia from '@/stores/store.js'
+import { useLoginStore } from '@/stores/login'
 
 const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),
@@ -17,6 +21,10 @@ const router = createRouter({
       path: '/',
       name: 'home',
       component: Home
+    },
+    {
+      path: '/home',
+      redirect: '/'
     },
     {
       path: '/calendar',
@@ -64,14 +72,27 @@ const router = createRouter({
       component: DiningManagement
     },
     {
-      path: '/about',
-      name: 'about',
-      // route level code-splitting
-      // this generates a separate chunk (About.[hash].js) for this route
-      // which is lazy-loaded when the route is visited.
-      component: () => import('../views/AboutView.vue')
+      path: '/login',
+      name: 'login',
+      component: LoginPage
+    },
+    {
+      path: '/register',
+      name: 'register',
+      component: RegisterPage
     }
   ]
+})
+
+router.beforeEach((to, from, next) => {
+  const loginStore = useLoginStore(pinia)
+  const loggedIn = loginStore.loggedIn
+  
+  if (!loggedIn && to.path !== '/' && to.path !== '/home' && to.path !== '/login' && to.path !== '/register') {
+    next('/login')
+  } else {
+    next()
+  }
 })
 
 export default router
