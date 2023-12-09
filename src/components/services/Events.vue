@@ -81,6 +81,9 @@
         ]
       },
       upcomingEvents() {
+        if (!this.events) {
+          return [];
+        }
         const upcoming = this.events.slice(0, 3)
         return upcoming.map(e => {
           return {
